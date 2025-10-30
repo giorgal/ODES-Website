@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ODES - Mission Validation & Simulation Platform</title>
+    <meta name="description" content="ODES provides comprehensive mission validation and simulation solutions for satellite operators and space companies.">
+
+    <!-- SEO & Social Meta Tags -->
+    <meta property="og:title" content="ODES - Mission Validation & Simulation Platform">
+    <meta property="og:description" content="Comprehensive simulation and validation platform ensuring mission success through systematic verification while maintaining the agility that defines modern space operations.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://odes-space.com">
+    <meta property="og:image" content="https://odes-space.com/odes-social-card.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ODES - Mission Validation & Simulation Platform">
+    <meta name="twitter:description" content="Comprehensive simulation and validation platform ensuring mission success through systematic verification.">
+    <meta name="twitter:image" content="https://odes-space.com/odes-social-card.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --odes-black: #000000;
+            --odes-dark: #0a0a0a;
+            --odes-gray: #1a1a1a;
+            --odes-light-gray: #2a2a2a;
+            --odes-accent: #ffffff;
+            --odes-text: #e0e0e0;
+            --odes-border: #333333;
+            --odes-purple: #b7a9c9;
+            --odes-coral: #e25c3f;
+            --odes-gradient: linear-gradient(135deg, #b7a9c9 0%, #e25c3f 100%);
+        }
+
+        body {
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--odes-black);
+            color: var(--odes-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Scroll Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-in-delay-1 { transition-delay: 0.1s; }
+        .fade-in-delay-2 { transition-delay: 0.2s; }
+        .fade-in-delay-3 { transition-delay: 0.3s; }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--odes-border);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            height: 85px;
+            width: auto;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--odes-accent);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--odes-text);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--odes-accent);
+        }
+
+        .cta-button {
+            background: var(--odes-gradient);
+            color: var(--odes-accent);
+            padding: 0.65rem 1.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 1100px;
+            text-align: center;
+            background: rgba(26, 26, 26, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 4rem 3rem;
+            border-radius: 12px;
+            border: 1px solid var(--odes-border);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 700;
+            color: var(--odes-accent);
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            color: var(--odes-text);
+            max-width: 750px;
+            margin: 0 auto 3rem;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--odes-gradient);
+            color: var(--odes-accent);
+            padding: 1rem 2.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--odes-accent);
+            padding: 1rem 2.5rem;
+            border: 1px solid var(--odes-border);
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: border-color 0.3s ease, background 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--odes-accent);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            color: var(--odes-accent);
+            margin-bottom: 1rem;
+            letter-spacing: -0.01em;
+        }
+
+        .section-header p {
+            font-size: 1.15rem;
+            color: var(--odes-text);
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        /* Problem & Solution */
+        .two-col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 4rem;
+            margin-top: 3rem;
+        }
+
+        .col-content h3 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--odes-accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .col-content p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--odes-text);
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-highlight {
+            font-weight: 600;
+            color: var(--odes-accent);
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: rgba(26, 26, 26, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--odes-border);
+            padding: 2.5rem;
+            border-radius: 8px;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--odes-purple);
+            box-shadow: 0 10px 40px rgba(183, 169, 201, 0.15);
+            background: rgba(26, 26, 26, 0.85);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .feature-card h3 {
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: var(--odes-accent);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            font-size: 1rem;
+            color: var(--odes-text);
+            line-height: 1.7;
+            opacity: 0.9;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: rgba(26, 26, 26, 0.6);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--odes-border);
+            border-bottom: 1px solid var(--odes-border);
+            padding: 5rem 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: var(--odes-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--odes-text);
+            opacity: 0.8;
+        }
+
+        /* Value Props */
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .value-item {
+            background: rgba(26, 26, 26, 0.7);
+            backdrop-filter: blur(10px);
+            border-left: 3px solid var(--odes-coral);
+            padding: 2rem;
+            border-radius: 4px;
+        }
+
+        .value-item h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--odes-accent);
+            margin-bottom: 1rem;
+        }
+
+        .value-item p {
+            color: var(--odes-text);
+            line-height: 1.7;
+            opacity: 0.9;
+        }
+
+        /* Team */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .team-card {
+            background: rgba(26, 26, 26, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--odes-border);
+            padding: 2.5rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            color: inherit;
+        }
+
+        .team-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 30px rgba(226, 92, 63, 0.1);
+            border-color: var(--odes-coral);
+            background: rgba(26, 26, 26, 0.85);
+        }
+
+        .team-card h4 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--odes-accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .team-role {
+            font-size: 0.95rem;
+            color: var(--odes-text);
+            margin-bottom: 1rem;
+            font-weight: 500;
+            opacity: 0.7;
+        }
+
+        .team-card p {
+            font-size: 0.95rem;
+            color: var(--odes-text);
+            line-height: 1.6;
+            opacity: 0.85;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: rgba(26, 26, 26, 0.7);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--odes-border);
+            text-align: center;
+            padding: 6rem 2rem;
+        }
+
+        .contact-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin: 3rem 0;
+        }
+
+        .contact-item h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--odes-accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-item p {
+            color: var(--odes-text);
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--odes-black);
+            border-top: 1px solid var(--odes-border);
+            padding: 3rem 2rem 2rem;
+            text-align: center;
+        }
+
+        .footer-logo {
+            height: 36px;
+            margin-bottom: 1.5rem;
+            opacity: 0.8;
+        }
+
+        footer p {
+            color: var(--odes-text);
+            opacity: 0.6;
+            font-size: 0.9rem;
+        }
+
+        /* Testimonial Section */
+        .testimonials-section {
+            background: rgba(10, 10, 10, 0.5);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--odes-border);
+            border-bottom: 1px solid var(--odes-border);
+            padding: 5rem 2rem;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            max-width: 1400px;
+            margin: 3rem auto 0;
+        }
+
+        .testimonial-card {
+            background: rgba(26, 26, 26, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--odes-border);
+            border-left: 3px solid var(--odes-purple);
+            padding: 2.5rem;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .testimonial-quote {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--odes-text);
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--odes-accent);
+            font-size: 1rem;
+        }
+
+        .testimonial-role {
+            color: var(--odes-text);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* Decorative Elements */
+        .gradient-divider {
+            height: 2px;
+            background: var(--odes-gradient);
+            max-width: 100px;
+            margin: 0 auto;
+            opacity: 0.6;
+        }
+
+        .infinity-decoration {
+            position: absolute;
+            opacity: 0.03;
+            pointer-events: none;
+        }
+
+        /* Single Background Image System */
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            /* Add your background image here */
+            background-image: url('background4.jpg');
+        }
+
+        .background-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Dark overlay to ensure text readability */
+            background: linear-gradient(
+                180deg,
+                rgba(0,0,0,0.85) 0%,
+                rgba(0,0,0,0.75) 50%,
+                rgba(0,0,0,0.85) 100%
+            );
+        }
+
+        /* Subtle gradient overlay for depth */
+        .gradient-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background:
+                radial-gradient(ellipse at 20% 30%, rgba(183, 169, 201, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 70%, rgba(226, 92, 63, 0.12) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        /* Floating particles effect */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--odes-accent);
+            border-radius: 50%;
+            opacity: 0.2;
+            animation: float linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.2;
+            }
+            90% {
+                opacity: 0.2;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(0, 0, 0, 0.98);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                border-bottom: 1px solid var(--odes-border);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .two-col {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .hero {
+                padding: 6rem 1.5rem 3rem;
+            }
+
+            .hero-content {
+                padding: 3rem 2rem;
+            }
+
+            section {
+                padding: 3rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Single Background Image -->
+    <div class="background-container">
+        <div class="background-image"></div>
+    </div>
+
+    <!-- Gradient Overlay for depth -->
+    <div class="gradient-overlay"></div>
+
+    <!-- Floating Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <img src="odes-RGB-reverse.png" alt="ODES" class="logo">
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#platform" onclick="closeMobileMenu()">Platform</a></li>
+                <li><a href="#capabilities" onclick="closeMobileMenu()">Capabilities</a></li>
+                <li><a href="#about" onclick="closeMobileMenu()">About</a></li>
+                <li><a href="#contact" class="cta-button" onclick="closeMobileMenu()">Get in Touch</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="fade-in">Mission Validation<br>for New Space</h1>
+            <p class="hero-subtitle fade-in fade-in-delay-1">Comprehensive simulation and validation platform ensuring mission success through systematic verification while maintaining the agility that defines modern space operations.</p>
+            <div class="hero-cta fade-in fade-in-delay-2">
+                <a href="#contact" class="btn-primary">Schedule Demo</a>
+                <a href="#platform" class="btn-secondary">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem & Solution -->
+    <section id="platform">
+        <div class="two-col">
+            <div class="col-content">
+                <h3>The Challenge</h3>
+                <p>New Space companies face a critical gap: the drive for speed and cost efficiency often comes at the expense of thorough validation. This has led to increased mission failures.</p>
+                <p>Recent data shows that <span class="stat-highlight">65% of CubeSat missions fail to meet their objectives</span>, with fragmented validation processes and lack of structured methodologies being primary contributors.</p>
+            </div>
+            <div class="col-content">
+                <h3>Our Approach</h3>
+                <p>ODES bridges institutional rigor with New Space agility. Our platform provides comprehensive validation workflows that catch issues early, reduce risk, and accelerate time-to-launch.</p>
+                <p>We combine <span class="stat-highlight">decades of institutional heritage</span> with modern development practices to deliver faster validation cycles, lower operational costs, and significantly improved mission reliability.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <div class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">15+</div>
+                <div class="stat-label">Years Heritage</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">3</div>
+                <div class="stat-label">Active Missions</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">ESA</div>
+                <div class="stat-label">Compliant Standards</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">40%</div>
+                <div class="stat-label">Faster Validation</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Platform Preview -->
+    <section style="padding: 3rem 2rem;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <div style="background: rgba(26, 26, 26, 0.7); backdrop-filter: blur(10px); border: 1px solid var(--odes-border); border-radius: 8px; padding: 3rem; text-align: center;">
+                <div style="aspect-ratio: 16/9; background: rgba(10, 10, 10, 0.6); backdrop-filter: blur(5px); border: 1px solid var(--odes-border); border-radius: 4px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="8" y="12" width="48" height="32" stroke="#666" stroke-width="2" fill="none" rx="2"/>
+                        <circle cx="32" cy="28" r="8" stroke="#666" stroke-width="2" fill="none"/>
+                        <path d="M20 28 L28 36 M44 28 L36 36" stroke="#666" stroke-width="2"/>
+                        <rect x="20" y="48" width="24" height="4" fill="#666" rx="1"/>
+                    </svg>
+                </div>
+                <h3 style="font-size: 1.3rem; color: var(--odes-accent); margin-bottom: 0.5rem; font-weight: 600;">Operational Simulator</h3>
+                <p style="color: var(--odes-text); opacity: 0.8; max-width: 600px; margin: 0 auto;">Real-time mission simulation and validation environment</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Capabilities -->
+    <section id="capabilities">
+        <div class="section-header">
+            <h2>Platform Capabilities</h2>
+            <p>End-to-end validation from design through on-orbit operations</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <svg class="feature-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="24" cy="24" r="6" fill="#ffffff"/>
+                    <path d="M24 14 C18 14, 14 18, 14 24" stroke="#ffffff" stroke-width="2" fill="none"/>
+                    <path d="M24 10 C16 10, 10 16, 10 24" stroke="#ffffff" stroke-width="2" fill="none" opacity="0.4"/>
+                    <path d="M24 14 C30 14, 34 18, 34 24" stroke="#ffffff" stroke-width="2" fill="none"/>
+                    <path d="M24 10 C32 10, 38 16, 38 24" stroke="#ffffff" stroke-width="2" fill="none" opacity="0.4"/>
+                </svg>
+                <h3>Mission Simulation</h3>
+                <p>Complete mission scenario simulation with realistic operational conditions, environmental modeling, and constraint validation.</p>
+            </div>
+            <div class="feature-card">
+                <svg class="feature-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M24 6 L38 12 L38 24 C38 32 24 42 24 42 C24 42 10 32 10 24 L10 12 Z" stroke="#ffffff" stroke-width="2" fill="none"/>
+                    <polyline points="18,24 22,28 30,20" stroke="#ffffff" stroke-width="2" fill="none"/>
+                </svg>
+                <h3>Software Validation</h3>
+                <p>Comprehensive flight software testing with automated test generation, code coverage analysis, and regression testing.</p>
+            </div>
+            <div class="feature-card">
+                <svg class="feature-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="8" y="14" width="32" height="20" stroke="#ffffff" stroke-width="2" fill="none"/>
+                    <line x1="8" y1="24" x2="40" y2="24" stroke="#ffffff" stroke-width="2"/>
+                    <circle cx="24" cy="19" r="2" fill="#ffffff"/>
+                </svg>
+                <h3>Hardware-in-Loop</h3>
+                <p>Real-time integration testing with actual spacecraft components, validating hardware-software interfaces before flight.</p>
+            </div>
+            <div class="feature-card">
+                <svg class="feature-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M38 20 C36 14, 30 10, 24 10 C16 10, 10 16, 10 24 C10 32, 16 38, 24 38 C30 38, 36 34, 38 28" stroke="#ffffff" stroke-width="2" fill="none"/>
+                    <polyline points="34,12 38,20 30,20" fill="#ffffff"/>
+                </svg>
+                <h3>Continuous Testing</h3>
+                <p>Automated regression testing with CI/CD integration ensures every code change is validated against mission requirements.</p>
+            </div>
+            <div class="feature-card">
+                <svg class="feature-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="24" cy="24" r="18" stroke="#ffffff" stroke-width="2" fill="none"/>
+                    <circle cx="24" cy="24" r="12" stroke="#ffffff" stroke-width="2" fill="none" opacity="0.5"/>
+                    <circle cx="24" cy="24" r="4" fill="#ffffff"/>
+                </svg>
+                <h3>Requirements Traceability</h3>
+                <p>Complete visibility from high-level mission objectives through implementation to validation results and compliance.</p>
+            </div>
+            <div class="feature-card">
+                <svg class="feature-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="8" y="28" width="8" height="16" fill="#ffffff"/>
+                    <rect x="20" y="20" width="8" height="24" fill="#ffffff" opacity="0.7"/>
+                    <rect x="32" y="12" width="8" height="32" fill="#ffffff" opacity="0.4"/>
+                </svg>
+                <h3>Analytics & Reporting</h3>
+                <p>Detailed metrics, coverage analysis, and automated compliance documentation for regulatory and customer requirements.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Integration Preview -->
+    <section style="padding: 3rem 2rem;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <div style="background: rgba(26, 26, 26, 0.7); backdrop-filter: blur(10px); border: 1px solid var(--odes-border); border-radius: 8px; padding: 3rem; text-align: center;">
+                <div style="aspect-ratio: 16/9; background: rgba(10, 10, 10, 0.6); backdrop-filter: blur(5px); border: 1px solid var(--odes-border); border-radius: 4px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="12" y="20" width="16" height="24" stroke="#666" stroke-width="2" fill="none" rx="2"/>
+                        <rect x="36" y="20" width="16" height="24" stroke="#666" stroke-width="2" fill="none" rx="2"/>
+                        <line x1="28" y1="32" x2="36" y2="32" stroke="#666" stroke-width="2"/>
+                        <circle cx="32" cy="32" r="2" fill="#666"/>
+                        <path d="M20 26 L20 30 M44 26 L44 30 M20 34 L20 38 M44 34 L44 38" stroke="#666" stroke-width="2"/>
+                    </svg>
+                </div>
+                <h3 style="font-size: 1.3rem; color: var(--odes-accent); margin-bottom: 0.5rem; font-weight: 600;">External Facility Integration</h3>
+                <p style="color: var(--odes-text); opacity: 0.8; max-width: 600px; margin: 0 auto;">Seamless integration with testing facilities and hardware infrastructure</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Value Proposition -->
+    <section>
+        <div class="section-header">
+            <h2>Why ODES</h2>
+        </div>
+        <div class="value-grid">
+            <div class="value-item">
+                <h4>Reduce Mission Risk</h4>
+                <p>Identify and mitigate critical issues before launch through comprehensive simulation and systematic validation workflows.</p>
+            </div>
+            <div class="value-item">
+                <h4>Accelerate Development</h4>
+                <p>Parallel validation processes and automated testing reduce time-to-launch by up to 40% compared to traditional methods.</p>
+            </div>
+            <div class="value-item">
+                <h4>Lower Costs</h4>
+                <p>Early issue detection prevents expensive redesigns and mission failures. Reduce validation overhead through automation.</p>
+            </div>
+            <div class="value-item">
+                <h4>Ensure Compliance</h4>
+                <p>Automated documentation and traceability satisfy regulatory requirements and customer quality standards.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials-section fade-in">
+        <div style="max-width: 1400px; margin: 0 auto;">
+            <div class="section-header">
+                <h2>Trusted by Space Innovators</h2>
+                <div class="gradient-divider" style="margin-top: 1.5rem;"></div>
+            </div>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-quote">"[Customer testimonial about how ODES improved their mission validation process and reduced development time]"</p>
+                    <div class="testimonial-author">Customer Name</div>
+                    <div class="testimonial-role">Title, Company Name</div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-quote">"[Customer testimonial about mission success, quality improvements, or risk reduction achieved with ODES]"</p>
+                    <div class="testimonial-author">Customer Name</div>
+                    <div class="testimonial-role">Title, Company Name</div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-quote">"[Customer testimonial highlighting specific features, support quality, or competitive advantages]"</p>
+                    <div class="testimonial-author">Customer Name</div>
+                    <div class="testimonial-role">Title, Company Name</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team -->
+    <section id="about">
+        <div class="section-header">
+            <h2>The Team</h2>
+            <p>Experienced founders combining institutional heritage with startup agility</p>
+        </div>
+        <div class="team-grid">
+            <a href="https://www.linkedin.com/in/giorgos-galanos/" target="_blank" rel="noopener noreferrer" class="team-card">
+                <h4>Giorgos Galanos</h4>
+                <div class="team-role">CEO & Co-Founder</div>
+                <p>15+ years in space industry with extensive experience in operational simulators, mission validation, and software quality assurance.</p>
+            </a>
+            <a href="https://www.linkedin.com/in/orestis-ousoultzoglou/" target="_blank" rel="noopener noreferrer" class="team-card">
+                <h4>Orestis Ousoultzoglou</h4>
+                <div class="team-role">CTO & Co-Founder</div>
+                <p>Expert in distributed systems, real-time software architecture, and performance optimization for mission-critical applications.</p>
+            </a>
+            <a href="https://www.linkedin.com/in/romanos-voulgarakis/" target="_blank" rel="noopener noreferrer" class="team-card">
+                <h4>Romanos Voulgarakis</h4>
+                <div class="team-role">CSO & Co-Founder</div>
+                <p>Specialist in satellite subsystems with deep expertise in ADCS, guidance, navigation, and control systems.</p>
+            </a>
+            <a href="https://www.linkedin.com/in/livanos/" target="_blank" rel="noopener noreferrer" class="team-card">
+                <h4>Nikos Livanos</h4>
+                <div class="team-role">Business Advisor</div>
+                <p>20+ years in embedded systems and strategic business development across aerospace and defense sectors.</p>
+            </a>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="contact-section">
+        <div class="contact-content">
+            <h2 style="margin-bottom: 1.5rem;">Let's Talk</h2>
+            <p style="font-size: 1.15rem; margin-bottom: 3rem; opacity: 0.9;">Ready to improve your mission success rate? Get in touch to discuss how ODES can support your validation needs.</p>
+
+            <div class="contact-info">
+                <div class="contact-item">
+                    <h4>Email</h4>
+                    <p>info@odes-space.com</p>
+                </div>
+                <div class="contact-item">
+                    <h4>Location</h4>
+                    <p>Athens, Greece</p>
+                </div>
+                <div class="contact-item">
+                    <h4>Heritage</h4>
+                    <p>Built by EMTECH SPACE</p>
+                </div>
+                <div class="contact-item">
+                    <h4>Missions</h4>
+                    <p>HSD · HELEO · ERMIS</p>
+                </div>
+            </div>
+
+            <a href="mailto:info@odes-space.com" class="btn-primary" style="margin-top: 2rem;">Get in Touch</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <img src="odes-RGB-reverse.png" alt="ODES" class="footer-logo">
+        <p>© 2025 ODES. Powered by EMTECH SPACE.</p>
+    </footer>
+
+    <script>
+        // Mobile Menu
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        function closeMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.remove('active');
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Simple nav background on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(0, 0, 0, 0.95)';
+            } else {
+                nav.style.background = 'rgba(0, 0, 0, 0.8)';
+            }
+        });
+
+        // Scroll-triggered animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Animated stat counters
+        function animateCounter(element, target, duration = 2000) {
+            const isNumber = !isNaN(parseInt(target));
+            if (!isNumber) {
+                element.textContent = target;
+                return;
+            }
+
+            const start = 0;
+            const increment = target / (duration / 16);
+            let current = start;
+
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target + (target !== parseInt(target) ? '' : '+');
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current) + (target !== parseInt(target) ? '' : '+');
+                }
+            }, 16);
+        }
+
+        // Trigger counter animation on scroll
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !entry.target.dataset.animated) {
+                    const numbers = entry.target.querySelectorAll('.stat-number');
+                    numbers.forEach(num => {
+                        const text = num.textContent.trim();
+                        if (text === 'ESA') return;
+                        const target = parseInt(text);
+                        if (!isNaN(target)) {
+                            num.textContent = '0';
+                            animateCounter(num, target);
+                        }
+                    });
+                    entry.target.dataset.animated = 'true';
+                }
+            });
+        }, { threshold: 0.5 });
+
+        const statsSection = document.querySelector('.stats-section');
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+
+        // Initial visibility for hero elements
+        setTimeout(() => {
+            document.querySelectorAll('.hero .fade-in').forEach(el => {
+                el.classList.add('visible');
+            });
+        }, 100);
+
+        // ========================================
+        // Floating Particles System
+        // ========================================
+
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30; // Subtle amount
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+
+                // Random starting position
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + 'vh';
+
+                // Random animation duration (slower = more subtle)
+                const duration = 20 + Math.random() * 30; // 20-50 seconds
+                particle.style.animationDuration = duration + 's';
+
+                // Random delay for staggered effect
+                particle.style.animationDelay = Math.random() * 10 + 's';
+
+                // Random size variation
+                const size = 1 + Math.random() * 2; // 1-3px
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Initialize particles
+        createParticles();
+
+        // ========================================
+        // Scroll-based background parallax effect
+        // ========================================
+
+        let ticking = false;
+
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const scrolled = window.pageYOffset;
+                    const bgImage = document.querySelector('.background-image');
+                    const particles = document.getElementById('particles');
+
+                    // Subtle parallax effect on background
+                    if (bgImage) {
+                        bgImage.style.transform = `translateY(${scrolled * 0.1}px)`;
+                    }
+                    if (particles) {
+                        particles.style.transform = `translateY(${scrolled * 0.15}px)`;
+                    }
+
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+    </script>
+</body>
+</html>
