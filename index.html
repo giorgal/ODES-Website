@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ODES - Mission Validation & Simulation Platform</title>
+    <title>ODES - Validate Before Flight</title>
     <meta name="description" content="ODES provides comprehensive mission validation and simulation solutions for satellite operators and space companies.">
 
     <!-- SEO & Social Meta Tags -->
@@ -54,6 +54,11 @@
 
         html {
             scroll-behavior: smooth;
+        }
+
+        /* Slower scroll for cinematic transition */
+        html.cinematic-scroll {
+            scroll-behavior: auto;
         }
 
         /* Scroll Animations */
@@ -199,6 +204,13 @@
             justify-content: center;
             padding: 10rem 2rem 6rem;
             position: relative;
+            transition: opacity 6s ease-out, transform 6s ease-out;
+        }
+
+        .hero.hidden {
+            opacity: 0;
+            transform: scale(0.95);
+            pointer-events: none;
         }
 
         .hero-content {
@@ -208,12 +220,26 @@
         }
 
         .hero h1 {
-            font-size: clamp(3rem, 7vw, 5.5rem);
+            font-size: clamp(2rem, 5vw, 4.5rem);
             font-weight: 700;
             color: var(--odes-accent);
-            margin-bottom: 0;
+            margin-bottom: 1rem;
             line-height: 1.15;
             letter-spacing: -0.03em;
+        }
+
+        @media (min-width: 769px) {
+            .hero h1 {
+                white-space: nowrap;
+            }
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-weight: 400;
+            color: var(--odes-text);
+            opacity: 0.85;
+            line-height: 1.3;
         }
 
         .hero-cta {
@@ -320,7 +346,7 @@
 
         /* Section Styles */
         section {
-            padding: 5rem 2rem;
+            padding: 5rem 10rem;
             max-width: 1400px;
             margin: 0 auto;
             position: relative;
@@ -342,18 +368,25 @@
             background: transparent;
         }
 
-        /* Add subtle dividers between sections */
+        /* Section Transitions - Triple gradient line */
         section:not(:last-of-type)::after {
             content: '';
             position: absolute;
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 80%;
-            max-width: 800px;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--odes-border), transparent);
-            opacity: 0.3;
+            width: 60%;
+            max-width: 600px;
+            height: 3px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                var(--odes-grey) 25%,
+                var(--odes-purple) 50%,
+                var(--odes-coral) 75%,
+                transparent
+            );
+            opacity: 0.4;
         }
 
         .section-header {
@@ -455,7 +488,7 @@
             backdrop-filter: blur(10px);
             border-top: 1px solid var(--odes-border);
             border-bottom: 1px solid var(--odes-border);
-            padding: 5rem 2rem;
+            padding: 5rem 10rem;
         }
 
         .stats-grid {
@@ -573,7 +606,7 @@
             backdrop-filter: blur(10px);
             border-top: 1px solid var(--odes-border);
             text-align: center;
-            padding: 6rem 2rem;
+            padding: 6rem 10rem;
         }
 
         .contact-content {
@@ -604,7 +637,7 @@
         footer {
             background: var(--odes-black);
             border-top: 1px solid var(--odes-border);
-            padding: 3rem 2rem 2rem;
+            padding: 3rem 10rem 2rem;
             text-align: center;
         }
 
@@ -627,7 +660,7 @@
             backdrop-filter: blur(10px);
             border-top: 1px solid var(--odes-border);
             border-bottom: 1px solid var(--odes-border);
-            padding: 5rem 2rem;
+            padding: 5rem 10rem;
         }
 
         .testimonial-grid {
@@ -705,7 +738,7 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
             /* Add your background image here */
-            background-image: url('background2.jpg');
+            background-image: url('background1.jpg');
         }
 
         .background-image::after {
@@ -777,7 +810,317 @@
             }
         }
 
+        /* Splash Screen */
+        .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--odes-black);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1.5s ease-out, visibility 1.5s ease-out;
+        }
+
+        .splash-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .splash-content {
+            text-align: center;
+            position: relative;
+        }
+
+        .splash-text {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 700;
+            color: white;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .splash-tagline {
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            color: white;
+            letter-spacing: 0.05em;
+            margin-bottom: 2rem;
+        }
+
+        .splash-logo {
+            width: 150px;
+            height: auto;
+        }
+
+        /* Cinematic About Section Animations */
+        .about-cinematic.active {
+            opacity: 1 !important;
+            transition: opacity 2s ease-in !important;
+        }
+
+        .cinematic-title.active {
+            animation: cinematicFadeIn 3s ease-out forwards;
+        }
+
+        .cinematic-divider.active {
+            animation: cinematicFadeIn 2s ease-out 1s forwards;
+        }
+
+        .cinematic-text.active {
+            animation: cinematicFadeIn 2.5s ease-out forwards;
+        }
+
+        .cinematic-text-1.active { animation-delay: 2s; }
+        .cinematic-text-2.active { animation-delay: 10s; }
+        .cinematic-text-3.active { animation-delay: 18s; }
+        .cinematic-text-4.active { animation-delay: 26s; }
+        .cinematic-text-5.active { animation-delay: 32s; }
+        .cinematic-text-6.active { animation-delay: 40s; }
+
+        /* Static styles when music is muted/not playing */
+        .about-cinematic .cinematic-title,
+        .about-cinematic .cinematic-divider,
+        .about-cinematic .cinematic-text {
+            opacity: 1;
+        }
+
+        @keyframes cinematicFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Audio Control Button */
+        .audio-control {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10000;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(26, 26, 26, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--odes-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .audio-control:hover {
+            background: rgba(26, 26, 26, 0.95);
+            border-color: var(--odes-purple);
+            transform: translateX(-50%) scale(1.1);
+            box-shadow: 0 4px 15px rgba(189, 79, 207, 0.3);
+        }
+
+        .audio-control svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--odes-accent);
+        }
+
+        .audio-control.muted svg {
+            fill: var(--odes-text);
+            opacity: 0.5;
+        }
+
+        @media (max-width: 768px) {
+            .audio-control {
+                bottom: 1rem;
+                width: 45px;
+                height: 45px;
+            }
+        }
+
+        /* Contact Form Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(5px);
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .modal-content {
+            background: var(--odes-dark);
+            border: 1px solid var(--odes-border);
+            border-radius: 8px;
+            padding: 3rem;
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--odes-text);
+            font-size: 2rem;
+            cursor: pointer;
+            line-height: 1;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--odes-accent);
+        }
+
+        .modal-header {
+            margin-bottom: 2rem;
+        }
+
+        .modal-header h2 {
+            font-size: 2rem;
+            color: var(--odes-accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-header p {
+            color: var(--odes-text);
+            opacity: 0.8;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--odes-accent);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-group label .required {
+            color: var(--odes-coral);
+            margin-left: 0.25rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: rgba(26, 26, 26, 0.7);
+            border: 1px solid var(--odes-border);
+            border-radius: 4px;
+            color: var(--odes-accent);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.95rem;
+            transition: border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--odes-purple);
+            background: rgba(26, 26, 26, 0.9);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--odes-text);
+            opacity: 0.5;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+            max-height: 300px;
+        }
+
+        .char-count {
+            font-size: 0.85rem;
+            color: var(--odes-text);
+            opacity: 0.6;
+            text-align: right;
+            margin-top: 0.5rem;
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: var(--odes-gradient);
+            color: var(--odes-accent);
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.3s ease;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .form-submit:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+            box-shadow: 0 8px 20px rgba(183, 169, 201, 0.3);
+        }
+
+        .form-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         /* Responsive */
+        @media (max-width: 768px) {
+            .modal-content {
+                padding: 2rem 1.5rem;
+            }
+
+            .modal-header h2 {
+                font-size: 1.5rem;
+            }
+        }
+
         @media (max-width: 768px) {
             .section-indicator {
                 display: none;
@@ -832,12 +1175,27 @@
             }
 
             section {
-                padding: 3rem 1.5rem;
+                padding: 3rem 2rem;
+            }
+
+            .stats-section,
+            .testimonials-section,
+            .contact-section {
+                padding: 4rem 2rem;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Splash Screen -->
+    <div class="splash-screen" id="splashScreen">
+        <div class="splash-content">
+            <div class="splash-text">REMOVE BEFORE FLIGHT</div>
+            <div class="splash-tagline">Validation Beyond Boundaries</div>
+            <img src="odes-RGB-reverse.png" alt="ODES" class="splash-logo">
+        </div>
+    </div>
+
     <!-- Single Background Image -->
     <div class="background-container">
         <div class="background-image"></div>
@@ -858,24 +1216,58 @@
             <img src="odes-RGB-reverse.png" alt="ODES" class="logo">
             <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
             <ul class="nav-links" id="navLinks">
+                <li><a href="#about" onclick="closeMobileMenu()">About</a></li>
                 <li><a href="#platform" onclick="closeMobileMenu()">Platform</a></li>
                 <li><a href="#capabilities" onclick="closeMobileMenu()">Capabilities</a></li>
                 <li><a href="#services" onclick="closeMobileMenu()">Services</a></li>
                 <li><a href="#products" onclick="closeMobileMenu()">Products</a></li>
                 <li><a href="#team" onclick="closeMobileMenu()">Team</a></li>
-                <li><a href="#contact" class="cta-button" onclick="closeMobileMenu()">Get in Touch</a></li>
+                <li><a href="#contact" class="cta-button" onclick="closeMobileMenu(); openContactModal(); event.preventDefault();">Get in Touch</a></li>
             </ul>
         </div>
     </nav>
 
     <!-- Hero -->
-    <section class="hero">
+    <section class="hero" id="heroSection">
         <div class="hero-content">
-            <h1 class="fade-in">
-                We validate your mission <br>
-                You live your dream
+            <h1 class="fade-in">Validation Beyond Boundaries</h1>
+            <p class="hero-subtitle fade-in">Keeping Your Mission Alive</p>
+        </div>
+    </section>
 
-            </h1>
+    <!-- About ODES -->
+    <section id="about" style="background: rgba(26, 26, 26, 0.3);" class="about-cinematic">
+        <div style="max-width: 900px; margin: 0 auto; text-align: center;">
+            <h2 class="cinematic-title" style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; color: var(--odes-accent); margin-bottom: 2rem; letter-spacing: -0.02em;">ODES</h2>
+            <div class="cinematic-divider" style="height: 3px; width: 100px; background: var(--odes-gradient); margin: 0 auto 3rem;"></div>
+
+            <p class="cinematic-text cinematic-text-1" style="font-size: clamp(1.1rem, 2vw, 1.3rem); line-height: 1.9; color: var(--odes-text); margin-bottom: 2rem;">
+                In ancient Greek tragedy, the <em style="color: var(--odes-accent); font-style: italic;">ωδές</em> (odes) were the moments when the chorus stepped forward—not to celebrate victory, but to <strong style="color: var(--odes-accent);">honor the unseen forces</strong> that made victory possible. They sang praises to the gods, to preparation, to the sacred work done in the shadows before glory emerged into light.
+            </p>
+
+            <p class="cinematic-text cinematic-text-2" style="font-size: clamp(1.1rem, 2vw, 1.3rem); line-height: 1.9; color: var(--odes-text); margin-bottom: 2rem;">
+                Today, the world celebrates the satellite in orbit—the moment of triumph, the spectacular launch, the mission success announcement. But we know a deeper truth: <strong style="color: var(--odes-accent);">missions are not won in orbit.</strong> They are won on the ground.
+            </p>
+
+            <p class="cinematic-text cinematic-text-3" style="font-size: clamp(1.1rem, 2vw, 1.3rem); line-height: 1.9; color: var(--odes-text); margin-bottom: 2rem;">
+                They are won in the <span style="color: var(--odes-purple); font-weight: 600;">thousand simulations</span> that catch the fatal flaw. In the <span style="color: var(--odes-purple); font-weight: 600;">validation cycles</span> that verify every assumption. In the <span style="color: var(--odes-purple); font-weight: 600;">late nights debugging</span> edge cases that will never make the headlines. In the <span style="color: var(--odes-purple); font-weight: 600;">systematic rigor</span> that transforms hope into certainty.
+            </p>
+
+            <p class="cinematic-text cinematic-text-4" style="font-size: clamp(1.1rem, 2vw, 1.3rem); line-height: 1.9; color: var(--odes-text); margin-bottom: 2rem;">
+                <strong style="font-size: 1.15em; color: var(--odes-accent); display: block; margin-bottom: 1rem;">This is our ode.</strong>
+                Not to the satellite—but to the engineers who refuse to let it fail. Not to the orbit—but to the ground activities that make the orbit possible. Not to the moment of launch—but to the <em style="color: var(--odes-coral);">months of validation</em> that ensure there will be something worth launching.
+            </p>
+
+            <p class="cinematic-text cinematic-text-5" style="font-size: clamp(1.1rem, 2vw, 1.3rem); line-height: 1.9; color: var(--odes-text); margin-bottom: 2rem;">
+                Like the ancient chorus, we stand in the background. We do not seek the applause. We seek something far more precious: <strong style="color: var(--odes-accent); font-size: 1.1em;">the quiet confidence that when your mission reaches orbit, it will survive.</strong>
+            </p>
+
+            <div class="cinematic-text cinematic-text-6" style="margin-top: 3rem; padding: 2rem; background: rgba(189, 79, 207, 0.05); border-left: 4px solid var(--odes-purple); border-radius: 4px;">
+                <p style="font-size: clamp(1.15rem, 2.2vw, 1.4rem); line-height: 1.8; color: var(--odes-accent); font-weight: 500; margin: 0; font-style: italic;">
+                    "While others celebrate the stars, we praise the ground that made reaching them possible."
+                </p>
+                <p style="font-size: 0.95rem; color: var(--odes-text); margin-top: 1rem; opacity: 0.7; margin-bottom: 0;">— The ODES Philosophy</p>
+            </div>
         </div>
     </section>
 
@@ -1044,7 +1436,7 @@
                     <span style="padding: 0.4rem 0.9rem; background: rgba(183, 169, 201, 0.15); border: 1px solid rgba(183, 169, 201, 0.3); border-radius: 20px; font-size: 0.85rem; color: var(--odes-purple);">Proposal Writing</span>
                 </div>
                 <div style="margin-top: 1.5rem;">
-                    <a href="mailto:info@odes-space.com?subject=Service Quote Request - Proposal & Budget Analysis" class="btn-gradient-purple">Request Quote</a>
+                    <a href="mailto:info@oodes.space?subject=Service Quote Request - Proposal & Budget Analysis" class="btn-gradient-purple">Request Quote</a>
                 </div>
             </div>
             <div class="feature-card">
@@ -1069,7 +1461,7 @@
                     <span style="padding: 0.4rem 0.9rem; background: rgba(226, 92, 63, 0.15); border: 1px solid rgba(226, 92, 63, 0.3); border-radius: 20px; font-size: 0.85rem; color: var(--odes-coral);">Design Support</span>
                 </div>
                 <div style="margin-top: 1.5rem;">
-                    <a href="mailto:info@odes-space.com?subject=Service Quote Request - Subsystem Engineering" class="btn-gradient-coral">Request Quote</a>
+                    <a href="mailto:info@oodes.space?subject=Service Quote Request - Subsystem Engineering" class="btn-gradient-coral">Request Quote</a>
                 </div>
             </div>
         </div>
@@ -1097,7 +1489,7 @@
                     <span style="padding: 0.4rem 0.9rem; background: rgba(183, 169, 201, 0.15); border: 1px solid rgba(183, 169, 201, 0.3); border-radius: 20px; font-size: 0.85rem; color: var(--odes-purple);">Automated Reports</span>
                 </div>
                 <div style="margin-top: 1.5rem;">
-                    <a href="mailto:info@odes-space.com?subject=Product Quote Request - Interference Resolution Tool" class="btn-gradient">Request Quote</a>
+                    <a href="mailto:info@oodes.space?subject=Product Quote Request - Interference Resolution Tool" class="btn-gradient">Request Quote</a>
                 </div>
             </div>
         </div>
@@ -1194,15 +1586,11 @@
             <div class="contact-info">
                 <div class="contact-item">
                     <h4>Email</h4>
-                    <p>info@odes-space.com</p>
+                    <p>info@oodes.space</p>
                 </div>
                 <div class="contact-item">
                     <h4>Location</h4>
-                    <p>Athens, Greece</p>
-                </div>
-                <div class="contact-item">
-                    <h4>Heritage</h4>
-                    <p>Built by EMTECH SPACE</p>
+                    <p>I. Foka 49, Athens 111 42, Greece</p>
                 </div>
                 <div class="contact-item">
                     <h4>Missions</h4>
@@ -1210,17 +1598,243 @@
                 </div>
             </div>
 
-            <a href="mailto:info@odes-space.com" class="btn-primary" style="margin-top: 2rem;">Get in Touch</a>
+            <button onclick="openContactModal()" class="btn-primary" style="margin-top: 2rem; border: none; cursor: pointer;">Get in Touch</button>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
         <img src="odes-RGB-reverse.png" alt="ODES" class="footer-logo">
-        <p>© 2025 ODES.</p>
+        <p>© 2025 All rights reserved.</p>
     </footer>
 
+    <!-- Background Music -->
+    <audio id="backgroundMusic" loop>
+        <source src="mythodea.mp3" type="audio/mpeg">
+        <source src="mythodea.ogg" type="audio/ogg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Audio Control Button -->
+    <button id="audioControl" class="audio-control" onclick="toggleAudio()" aria-label="Toggle background music">
+        <!-- Speaker Icon (Unmuted) -->
+        <svg id="speakerOn" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+        </svg>
+        <!-- Speaker Muted Icon (hidden by default) -->
+        <svg id="speakerOff" style="display: none;" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+        </svg>
+    </button>
+
+    <!-- Contact Form Modal -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeContactModal()">&times;</button>
+            <div class="modal-header">
+                <h2>Get in Touch</h2>
+                <p>We'd love to hear from you. Please fill out the form below.</p>
+            </div>
+            <form id="contactForm" onsubmit="handleFormSubmit(event)">
+                <div class="form-group">
+                    <label for="topic">Select topic <span class="required">*</span></label>
+                    <select id="topic" name="topic" required>
+                        <option value="">Select a topic</option>
+                        <option value="Products">Products</option>
+                        <option value="Services">Services</option>
+                        <option value="Support">Support</option>
+                        <option value="Investment">Investment</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="fullName">Full Name <span class="required">*</span></label>
+                    <input type="text" id="fullName" name="fullName" placeholder="Full Name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" placeholder="you@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number <span class="required">*</span></label>
+                    <input type="tel" id="phone" name="phone" placeholder="Phone Number" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="organization">Organization <span class="required">*</span></label>
+                    <input type="text" id="organization" name="organization" placeholder="Organization name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="country">Country <span class="required">*</span></label>
+                    <input type="text" id="country" name="country" placeholder="Greece" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message <span class="required">*</span></label>
+                    <textarea id="message" name="message" placeholder="Your message" maxlength="10000" required oninput="updateCharCount()"></textarea>
+                    <div class="char-count"><span id="charCount">0</span> of 10000 max characters</div>
+                </div>
+
+                <button type="submit" class="form-submit">Send Message</button>
+            </form>
+        </div>
+    </div>
+
     <script>
+        // ========================================
+        // Background Music Control
+        // ========================================
+
+        const music = document.getElementById('backgroundMusic');
+        const audioButton = document.getElementById('audioControl');
+        const speakerOn = document.getElementById('speakerOn');
+        const speakerOff = document.getElementById('speakerOff');
+        let isPlaying = true; // Default to playing (unmuted)
+        let cinematicTriggered = false;
+        let userMuted = false; // Track if user explicitly muted
+        let autoplayClickListener = null; // Store the autoplay recovery listener
+
+        // Try to autoplay music (might be blocked by browser policies)
+        function attemptAutoplay() {
+            music.volume = 0.3; // Set volume to 30%
+            const playPromise = music.play();
+
+            if (playPromise !== undefined) {
+                playPromise
+                    .then(() => {
+                        // Autoplay started
+                        isPlaying = true;
+                        updateAudioIcon();
+                        // Trigger cinematic sequence after 2 seconds if music is playing
+                        setTimeout(triggerCinematicSequence, 2000);
+                    })
+                    .catch(() => {
+                        // Autoplay was prevented
+                        isPlaying = false;
+                        updateAudioIcon();
+                    });
+            }
+        }
+
+        function triggerCinematicSequence() {
+            if (isPlaying && !cinematicTriggered) {
+                cinematicTriggered = true;
+
+                // Prepare elements for animation
+                const title = document.querySelector('.cinematic-title');
+                const divider = document.querySelector('.cinematic-divider');
+                const textElements = document.querySelectorAll('.cinematic-text');
+
+                title.style.opacity = '0';
+                divider.style.opacity = '0';
+                textElements.forEach(el => el.style.opacity = '0');
+
+                // Keep hero visible for 2 seconds, then start transition
+                setTimeout(() => {
+                    // Hide hero section
+                    const hero = document.querySelector('.hero');
+                    hero.classList.add('hidden');
+
+                    // Show about section background
+                    const aboutSection = document.querySelector('.about-cinematic');
+                    aboutSection.classList.add('active');
+
+                    // Calculate scroll parameters
+                    const navHeight = document.querySelector('nav').offsetHeight;
+                    const targetPosition = aboutSection.offsetTop - navHeight;
+                    const startPosition = window.pageYOffset;
+                    const distance = targetPosition - startPosition;
+                    const duration = 8000; // 8 seconds for very gentle scroll transition
+                    let scrollStart = null;
+
+                    function slowScroll(timestamp) {
+                        if (!scrollStart) scrollStart = timestamp;
+                        const progress = timestamp - scrollStart;
+                        const percentage = Math.min(progress / duration, 1);
+
+                        // Perfectly linear scroll - constant speed throughout
+                        window.scrollTo(0, startPosition + distance * percentage);
+
+                        // Start showing about content 2 seconds before scroll completes (at 6 seconds)
+                        if (progress >= 6000 && !title.classList.contains('active')) {
+                            // Show ODES title first
+                            title.classList.add('active');
+
+                            // Then show divider
+                            setTimeout(() => {
+                                divider.classList.add('active');
+
+                                // Then start text animations
+                                setTimeout(() => {
+                                    textElements.forEach(el => el.classList.add('active'));
+                                }, 1000);
+                            }, 500);
+                        }
+
+                        if (progress < duration) {
+                            requestAnimationFrame(slowScroll);
+                        }
+                    }
+
+                    // Start scrolling immediately
+                    requestAnimationFrame(slowScroll);
+                }, 1000); // Keep hero visible for 2 seconds
+            }
+        }
+
+        function toggleAudio() {
+            if (isPlaying) {
+                music.pause();
+                isPlaying = false;
+            } else {
+                music.play();
+                isPlaying = true;
+                // If user manually enables music and cinematic hasn't triggered yet, trigger it immediately
+                if (!cinematicTriggered) {
+                    triggerCinematicSequence();
+                }
+            }
+            updateAudioIcon();
+        }
+
+        function updateAudioIcon() {
+            if (isPlaying) {
+                speakerOn.style.display = 'block';
+                speakerOff.style.display = 'none';
+                audioButton.classList.remove('muted');
+            } else {
+                speakerOn.style.display = 'none';
+                speakerOff.style.display = 'block';
+                audioButton.classList.add('muted');
+            }
+        }
+
+        // ========================================
+        // Splash Screen
+        // ========================================
+
+        window.addEventListener('load', function() {
+            // Set initial icon state (unmuted by default)
+            updateAudioIcon();
+
+            // Attempt to play background music
+            attemptAutoplay();
+
+            // Wait 1.5 seconds then hide the splash screen
+            setTimeout(function() {
+                const splash = document.getElementById('splashScreen');
+                splash.classList.add('hidden');
+
+                // Remove splash screen from DOM after transition completes
+                setTimeout(function() {
+                    splash.remove();
+                }, 1500);
+            }, 1500);
+        });
+
         // Mobile Menu
         function toggleMobileMenu() {
             const navLinks = document.getElementById('navLinks');
@@ -1404,6 +2018,84 @@
 
         // Initialize after DOM is loaded
         initSectionIndicator();
+
+        // ========================================
+        // Contact Form Modal Functions
+        // ========================================
+
+        function openContactModal() {
+            const modal = document.getElementById('contactModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeContactModal() {
+            const modal = document.getElementById('contactModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+
+        // Close modal when clicking outside the content
+        document.getElementById('contactModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeContactModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeContactModal();
+            }
+        });
+
+        // Update character count for message field
+        function updateCharCount() {
+            const message = document.getElementById('message');
+            const charCount = document.getElementById('charCount');
+            charCount.textContent = message.value.length;
+        }
+
+        // Handle form submission
+        function handleFormSubmit(event) {
+            event.preventDefault();
+
+            const formData = {
+                topic: document.getElementById('topic').value,
+                fullName: document.getElementById('fullName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                organization: document.getElementById('organization').value,
+                country: document.getElementById('country').value,
+                message: document.getElementById('message').value
+            };
+
+            // Create email body
+            const emailBody = `
+Topic: ${formData.topic}
+Full Name: ${formData.fullName}
+Email: ${formData.email}
+Phone: ${formData.phone}
+Organization: ${formData.organization}
+Country: ${formData.country}
+
+Message:
+${formData.message}
+            `.trim();
+
+            // Create mailto link
+            const mailtoLink = `mailto:info@oodes.space?subject=Contact Form - ${formData.topic}&body=${encodeURIComponent(emailBody)}`;
+
+            // Open email client
+            window.location.href = mailtoLink;
+
+            // Close modal and reset form
+            setTimeout(() => {
+                closeContactModal();
+                document.getElementById('contactForm').reset();
+                updateCharCount();
+            }, 500);
+        }
 
         // ========================================
         // Scroll-based background parallax effect
