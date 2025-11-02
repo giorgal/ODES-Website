@@ -83,6 +83,7 @@
             opacity: 0;
             transform: translateY(50px) scale(0.95);
             transition: opacity 1s ease-out, transform 1s ease-out;
+            scroll-margin-top: 100px; /* Offset for fixed nav bar so titles are visible */
         }
 
         /* Print page breaks */
@@ -234,6 +235,21 @@
 
         .nav-links a:hover {
             color: var(--odes-accent);
+        }
+
+        .nav-links a.active {
+            color: var(--odes-purple);
+            position: relative;
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--odes-purple);
         }
 
         .cta-button {
@@ -1492,7 +1508,9 @@
                 <li><a href="#capabilities" onclick="closeMobileMenu()">Capabilities</a></li>
                 <li><a href="#services" onclick="closeMobileMenu()">Services</a></li>
                 <li><a href="#products" onclick="closeMobileMenu()">Products</a></li>
+                <li><a href="#projects" onclick="closeMobileMenu()">Projects</a></li>
                 <li><a href="#team" onclick="closeMobileMenu()">Team</a></li>
+                <li><a href="insights.html" onclick="closeMobileMenu()">Insights</a></li>
                 <li><a href="#contact" class="cta-button" onclick="closeMobileMenu(); openContactModal(); event.preventDefault();">Get in Touch</a></li>
             </ul>
         </div>
@@ -1540,11 +1558,9 @@
                 <p style="font-size: 0.95rem; color: var(--odes-text); margin-top: 1rem; opacity: 0.7; margin-bottom: 0;">— The ODES Philosophy</p>
             </div>
         </div>
-    </section>
 
-    <!-- Mission, Vision, Values -->
-    <section style="background: rgba(10, 10, 10, 0.5);">
-        <div style="max-width: 100%; margin: 0 auto;">
+        <!-- Mission, Vision, Values (part of About section) -->
+        <div style="max-width: 100%; margin: 4rem auto 0; padding: 3rem 0; background: rgba(10, 10, 10, 0.5);">
             <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem;">
 
                 <div class="fade-in-child" style="padding: 2rem; background: rgba(26, 26, 26, 0.5); border-left: 3px solid var(--odes-accent); border-radius: 4px;">
@@ -1813,33 +1829,8 @@
         </div>
     </section>
 
-    <!-- Value Proposition -->
-    <section>
-        <div class="section-header">
-            <h2>Why ODES</h2>
-        </div>
-        <div class="value-grid">
-            <div class="value-item">
-                <h4>Reduce Mission Risk</h4>
-                <p>Identify and mitigate critical issues before launch through comprehensive simulation and systematic validation workflows.</p>
-            </div>
-            <div class="value-item">
-                <h4>Accelerate Development</h4>
-                <p>Parallel validation processes and automated testing reduce time-to-launch by up to 40% compared to traditional methods.</p>
-            </div>
-            <div class="value-item">
-                <h4>Lower Costs</h4>
-                <p>Early issue detection prevents expensive redesigns and mission failures. Reduce validation overhead through automation.</p>
-            </div>
-            <div class="value-item">
-                <h4>Ensure Compliance</h4>
-                <p>Automated documentation and traceability satisfy regulatory requirements and customer quality standards.</p>
-            </div>
-        </div>
-    </section>
-
     <!-- Testimonials & Projects -->
-    <section class="testimonials-section fade-in">
+    <section id="projects" class="testimonials-section fade-in">
         <div style="max-width: 1400px; margin: 0 auto;">
             <!-- Projects -->
             <div class="section-header">
@@ -2292,37 +2283,60 @@
         // Splash Screen & Music Autoplay
         // ========================================
 
-        // Scroll to top on page load/refresh
-        window.addEventListener('beforeunload', function() {
-            window.scrollTo(0, 0);
-        });
-
-        // Force scroll to top on page load
+        // Always scroll to top on page load/refresh
         if (history.scrollRestoration) {
             history.scrollRestoration = 'manual';
         }
         window.scrollTo(0, 0);
 
-        window.addEventListener('load', function() {
-            // Ensure we're at the top
+        window.addEventListener('beforeunload', function() {
             window.scrollTo(0, 0);
+        });
 
-            // Set initial icon state (unmuted by default)
-            updateAudioIcon();
+        window.addEventListener('load', function() {
+            // Check if coming from insights or other internal navigation
+            const skipSplash = sessionStorage.getItem('skipSplash');
+            const shouldOpenContactModal = sessionStorage.getItem('openContactModal');
 
-            // Attempt to play background music
-            attemptAutoplay();
-
-            // Wait 2 seconds then fade out the splash screen
-            setTimeout(function() {
+            if (skipSplash) {
+                // Skip splash screen - remove immediately
                 const splash = document.getElementById('splashScreen');
-                splash.classList.add('hidden');
-
-                // Remove splash screen from DOM after transition completes
-                setTimeout(function() {
+                if (splash) {
                     splash.remove();
-                }, 1500);
-            }, 2000);
+                }
+                // Clear the flag
+                sessionStorage.removeItem('skipSplash');
+
+                // Check if we should open contact modal
+                if (shouldOpenContactModal) {
+                    sessionStorage.removeItem('openContactModal');
+                    // Open modal after a brief delay to ensure page is ready
+                    setTimeout(function() {
+                        openContactModal();
+                    }, 100);
+                }
+                // Don't force scroll - let browser navigate to anchor naturally
+            } else {
+                // Show splash screen on fresh page load
+                window.scrollTo(0, 0);
+
+                // Set initial icon state (unmuted by default)
+                updateAudioIcon();
+
+                // Attempt to play background music
+                attemptAutoplay();
+
+                // Wait 2 seconds then fade out the splash screen
+                setTimeout(function() {
+                    const splash = document.getElementById('splashScreen');
+                    splash.classList.add('hidden');
+
+                    // Remove splash screen from DOM after transition completes
+                    setTimeout(function() {
+                        splash.remove();
+                    }, 1500);
+                }, 2000);
+            }
         });
 
         // Mobile Menu
@@ -2340,9 +2354,22 @@
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
+                const href = this.getAttribute('href');
+                const target = document.querySelector(href);
+
                 if (target) {
+                    // Scroll to target
                     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                    // Check highlight during and after scroll
+                    let checkCount = 0;
+                    const checkInterval = setInterval(() => {
+                        highlightActiveSection();
+                        checkCount++;
+                        if (checkCount >= 10) { // Check for 1 second (10 x 100ms)
+                            clearInterval(checkInterval);
+                        }
+                    }, 100);
                 }
             });
         });
@@ -2355,6 +2382,89 @@
             } else {
                 nav.style.background = 'rgba(0, 0, 0, 0.8)';
             }
+        });
+
+        // Highlight active section using Intersection Observer (detects when titles are visible)
+        var activeSection = null;
+
+        function updateActiveNavLink(sectionId) {
+            var navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+
+            navLinks.forEach(function(link) {
+                var href = link.getAttribute('href');
+                if (href === '#' + sectionId) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+
+            activeSection = sectionId;
+        }
+
+        function clearAllActiveLinks() {
+            var navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+            navLinks.forEach(function(link) {
+                link.classList.remove('active');
+            });
+            activeSection = null;
+        }
+
+        // Set up intersection observers for each section
+        window.addEventListener('load', function() {
+            // Observer for hero section - clears highlights when in hero
+            var heroObserverOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.3
+            };
+
+            var heroObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        clearAllActiveLinks();
+                    }
+                });
+            }, heroObserverOptions);
+
+            var heroSection = document.getElementById('heroSection');
+            if (heroSection) {
+                heroObserver.observe(heroSection);
+            }
+
+            // Observer for section titles
+            var observerOptions = {
+                root: null,
+                rootMargin: '-80px 0px -70% 0px', // Trigger when title passes 80px from top (below nav)
+                threshold: 0
+            };
+
+            var sectionObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        var sectionId = entry.target.getAttribute('data-section');
+                        updateActiveNavLink(sectionId);
+                    }
+                });
+            }, observerOptions);
+
+            // Observe the title element of each section
+            var sections = [
+                { id: 'about', selector: '#about h2' },
+                { id: 'capabilities', selector: '#capabilities .section-header h2' },
+                { id: 'services', selector: '#services .section-header h2' },
+                { id: 'products', selector: '#products .section-header h2' },
+                { id: 'projects', selector: '#projects .section-header h2' },
+                { id: 'team', selector: '#team .section-header h2' }
+            ];
+
+            sections.forEach(function(section) {
+                var titleElement = document.querySelector(section.selector);
+                if (titleElement) {
+                    titleElement.setAttribute('data-section', section.id);
+                    sectionObserver.observe(titleElement);
+                }
+            });
         });
 
         // Background parallax effect
@@ -2423,7 +2533,7 @@
                                         console.log('Video playing successfully');
                                     })
                                     .catch(error => {
-                                        console.log('Video autoplay prevented, retrying...', error);
+                                        // console.log('Video autoplay prevented, retrying...', error);
                                         // Retry after a delay
                                         setTimeout(attemptPlay, 500);
                                     });

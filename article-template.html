@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="articleTitle">Article - ODES</title>
+    <link rel="icon" type="image/png" href="../../favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --odes-black: #000000;
+            --odes-dark: #0a0a0a;
+            --odes-gray: #1a1a1a;
+            --odes-light-gray: #2a2a2a;
+            --odes-accent: #ffffff;
+            --odes-text: #e0e0e0;
+            --odes-border: #333333;
+            --odes-grey: #b4bbbf;
+            --odes-purple: #bd4fcf;
+            --odes-coral: #f25238;
+            --odes-gradient: linear-gradient(90deg, #b4bbbf 0%, #bd4fcf 50%, #f25238 100%);
+        }
+
+        body {
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--odes-black);
+            color: var(--odes-text);
+            line-height: 1.8;
+            overflow-x: hidden;
+            zoom: 0.85;
+        }
+
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .background-image {
+            position: absolute;
+            top: -10%;
+            left: 0;
+            width: 100%;
+            height: 120%;
+            background-size: cover;
+            background-position: center;
+            background-image: url('background1.jpg');
+        }
+
+        .background-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.75) 50%, rgba(0,0,0,0.85) 100%);
+        }
+
+        nav {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--odes-border);
+            padding: 1.2rem 2rem;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            height: 50px;
+        }
+
+        .back-link {
+            color: var(--odes-purple);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--odes-accent);
+        }
+
+        article {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 120px 2rem 4rem;
+        }
+
+        .article-header {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .article-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            color: var(--odes-accent);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            font-size: 1rem;
+            color: var(--odes-grey);
+            margin-bottom: 1rem;
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .author {
+            color: var(--odes-purple);
+            font-weight: 600;
+        }
+
+        .article-image {
+            width: 100%;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin: 2rem 0 3rem;
+            border: 1px solid var(--odes-border);
+        }
+
+        .article-content {
+            font-size: 1.1rem;
+            line-height: 1.9;
+        }
+
+        .article-content h2 {
+            font-size: 2rem;
+            color: var(--odes-accent);
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--odes-purple);
+        }
+
+        .article-content h3 {
+            font-size: 1.5rem;
+            color: var(--odes-purple);
+            margin: 2rem 0 1rem;
+        }
+
+        .article-content p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        .article-content strong {
+            color: var(--odes-accent);
+            font-weight: 600;
+        }
+
+        .article-content ul, .article-content ol {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+
+        .article-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        .article-content hr {
+            border: none;
+            border-top: 1px solid var(--odes-border);
+            margin: 3rem 0;
+        }
+
+        .article-content blockquote {
+            border-left: 4px solid var(--odes-purple);
+            padding: 1rem 1.5rem;
+            margin: 2rem 0;
+            background: rgba(189, 79, 207, 0.05);
+            border-radius: 4px;
+            font-style: italic;
+        }
+
+        footer {
+            background: var(--odes-black);
+            border-top: 1px solid var(--odes-border);
+            padding: 3rem 2rem 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .footer-logo {
+            height: 70px;
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+        }
+
+        footer p {
+            color: var(--odes-text);
+            opacity: 0.6;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            article {
+                padding: 100px 1.5rem 2rem;
+            }
+
+            .article-title {
+                font-size: 1.8rem;
+            }
+
+            .article-content h2 {
+                font-size: 1.5rem;
+            }
+
+            .article-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-container">
+        <div class="background-image"></div>
+    </div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html"><img src="odes-RGB-reverse.png" alt="ODES" class="logo"></a>
+            <a href="insights.html" class="back-link">← Back to Insights</a>
+        </div>
+    </nav>
+
+    <article id="articleContent">
+        <div class="article-header">
+            <h1 class="article-title" id="title">Loading...</h1>
+            <div class="article-meta">
+                <span class="author" id="author">Author</span>
+                <span id="date">Date</span>
+                <span id="category">Category</span>
+            </div>
+        </div>
+        <img id="articleImage" class="article-image" src="" alt="">
+        <div class="article-content" id="content">
+            Loading article...
+        </div>
+    </article>
+
+    <footer>
+        <img src="odes-RGB-reverse.png" alt="ODES" class="footer-logo">
+        <p>© 2025 ODES. All rights reserved.<br>Web Development by ODES.</p>
+    </footer>
+
+    <script>
+        // Articles data embedded directly (works with file:// protocol)
+        var articlesData = {
+            "article1": {
+                "folder": "article1",
+                "title": "Understanding RF Interference in Satellite Operations",
+                "author": "Dimitra Danovasili",
+                "date": "2025-01-15",
+                "category": "Technical",
+                "description": "A comprehensive analysis of RF interference challenges and mitigation strategies for satellite missions.",
+                "image": "image.jpg",
+                "content": `Understanding RF Interference in Satellite Operations
+Dimitra Danovasili
+January 15, 2025
+
+## Introduction
+
+Radio Frequency (RF) interference represents one of the most critical challenges in modern satellite operations. As the space around Earth becomes increasingly congested with communication satellites, the risk of signal degradation and operational disruptions continues to grow. This article explores the fundamental aspects of RF interference, its impacts on satellite missions, and proven mitigation strategies.
+
+## What is RF Interference?
+
+RF interference occurs when unwanted electromagnetic signals disrupt the intended communication between satellites and ground stations. This interference can originate from various sources:
+
+- **Adjacent Satellite Interference**: Signals from neighboring satellites operating on similar frequencies
+- **Terrestrial Sources**: Ground-based transmitters, cellular networks, and radar systems
+- **Jamming**: Intentional disruption of satellite communications
+- **Intermodulation Products**: Non-linear mixing of multiple signals in satellite transponders
+
+## Impact on Mission Operations
+
+The consequences of RF interference can range from minor signal quality degradation to complete communication loss. Key impacts include:
+
+**Signal Quality Degradation**
+Even minor interference can reduce the signal-to-noise ratio, leading to increased bit error rates and reduced data throughput. For missions requiring high-precision telemetry and command links, this degradation can compromise operational effectiveness.
+
+**Loss of Communication**
+Severe interference can result in complete loss of contact with the spacecraft, potentially jeopardizing mission-critical operations and spacecraft safety. During critical maneuvers or anomaly resolution, this can be catastrophic.
+
+**Increased Operational Costs**
+Dealing with interference requires additional ground station resources, frequency coordination efforts, and potentially switching to backup communication bands or ground stations.
+
+## Detection and Monitoring
+
+Effective RF interference mitigation begins with robust detection and monitoring capabilities:
+
+- **Spectrum Analyzers**: Real-time monitoring of the RF environment to identify interference signatures
+- **Signal Quality Metrics**: Continuous tracking of carrier-to-noise ratios, bit error rates, and signal strength
+- **Automated Alert Systems**: AI-powered systems that can detect anomalous interference patterns and trigger alerts
+
+## Mitigation Strategies
+
+### Frequency Coordination
+
+Proper frequency coordination with regulatory bodies and other satellite operators is essential. This includes:
+
+- Filing frequency assignments with the International Telecommunication Union (ITU)
+- Coordinating with adjacent satellite operators to minimize interference risks
+- Implementing frequency diversity in mission design
+
+### Adaptive Modulation and Coding
+
+Modern satellite communication systems employ adaptive techniques that can adjust to interference conditions:
+
+- **Variable coding rates** that provide additional error correction when interference is detected
+- **Adaptive modulation schemes** that can trade data rate for robustness
+- **Spread spectrum techniques** that distribute signals across wider bandwidths
+
+### Spatial Filtering
+
+Advanced antenna systems can help reject interference through:
+
+- **Narrow beam antennas** that reduce susceptibility to off-axis interference
+- **Adaptive nulling** techniques that can suppress signals from known interference directions
+- **Diversity reception** using multiple ground stations
+
+### Operational Procedures
+
+Well-designed operational procedures are crucial:
+
+- **Interference reporting protocols** for rapid response
+- **Backup communication plans** using alternative frequencies or ground stations
+- **Coordination with regulatory authorities** for interference investigation and resolution
+
+## Validation and Testing
+
+ODES's mission validation platform includes comprehensive RF interference testing capabilities:
+
+- **RF environment simulation** to model various interference scenarios
+- **Hardware-in-the-loop testing** with actual flight hardware exposed to simulated interference
+- **End-to-end communication chain validation** including ground segment and space segment
+- **Automated test sequences** that verify system performance under interference conditions
+
+## Conclusion
+
+As satellite constellations grow and the RF spectrum becomes more crowded, effective RF interference management is more critical than ever. Through a combination of careful mission design, advanced signal processing techniques, robust monitoring capabilities, and comprehensive pre-flight validation, operators can minimize the impact of interference on their missions.
+
+At ODES, we incorporate RF interference considerations into every aspect of mission validation, ensuring that satellites are prepared to operate reliably in today's complex electromagnetic environment. Our platform enables comprehensive testing of interference scenarios before launch, significantly reducing operational risks.
+
+---
+
+For more information about ODES's mission validation capabilities and how we can help prepare your satellite for the challenges of the modern RF environment, please contact our team.`
+            }
+        };
+
+        // Get article folder from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const articleFolder = urlParams.get('article');
+
+        if (articleFolder && articlesData[articleFolder]) {
+            const article = articlesData[articleFolder];
+
+            // Set metadata
+            document.getElementById('title').textContent = article.title;
+            document.getElementById('articleTitle').textContent = article.title + ' - ODES';
+            document.getElementById('author').textContent = 'By ' + article.author;
+
+            const formattedDate = new Date(article.date).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            document.getElementById('date').textContent = formattedDate;
+            document.getElementById('category').textContent = article.category;
+
+            // Set image
+            document.getElementById('articleImage').src = 'insights/articles/' + article.folder + '/' + article.image;
+            document.getElementById('articleImage').alt = article.title;
+
+            // Parse embedded content
+            var content = article.content;
+
+            // Simple markdown-like parsing
+            const contentDiv = document.getElementById('content');
+            const lines = content.split('\n');
+            let html = '';
+            let inList = false;
+
+            // Skip first 4 lines (title, author, date, blank)
+            for (let i = 4; i < lines.length; i++) {
+                const line = lines[i].trim();
+
+                if (line === '') {
+                    if (inList) {
+                        html += '</ul>';
+                        inList = false;
+                    }
+                    html += '<br>';
+                } else if (line.startsWith('## ')) {
+                    if (inList) {
+                        html += '</ul>';
+                        inList = false;
+                    }
+                    html += '<h2>' + line.substring(3) + '</h2>';
+                } else if (line.startsWith('### ')) {
+                    if (inList) {
+                        html += '</ul>';
+                        inList = false;
+                    }
+                    html += '<h3>' + line.substring(4) + '</h3>';
+                } else if (line.startsWith('**') && line.endsWith('**')) {
+                    if (inList) {
+                        html += '</ul>';
+                        inList = false;
+                    }
+                    html += '<h3>' + line.substring(2, line.length - 2) + '</h3>';
+                } else if (line.startsWith('- ')) {
+                    if (!inList) {
+                        html += '<ul>';
+                        inList = true;
+                    }
+                    html += '<li>' + line.substring(2) + '</li>';
+                } else if (line.match(/^\d+\.\s/)) {
+                    if (!inList) {
+                        html += '<ol>';
+                        inList = true;
+                    }
+                    html += '<li>' + line.substring(line.indexOf('.') + 2) + '</li>';
+                } else if (line === '---') {
+                    if (inList) {
+                        html += '</ul>';
+                        inList = false;
+                    }
+                    html += '<hr>';
+                } else {
+                    if (inList && !line.startsWith(' ')) {
+                        html += '</ul>';
+                        inList = false;
+                    }
+                    // Process inline formatting
+                    let processedLine = line
+                        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                        .replace(/\*(.+?)\*/g, '<em>$1</em>');
+                    html += '<p>' + processedLine + '</p>';
+                }
+            }
+
+            if (inList) {
+                html += '</ul>';
+            }
+
+            contentDiv.innerHTML = html;
+        }
+    </script>
+</body>
+</html>
