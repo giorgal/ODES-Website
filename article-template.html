@@ -56,7 +56,7 @@
             height: 120%;
             background-size: cover;
             background-position: center;
-            background-image: url('background1.jpg');
+            background-image: url('background.jpg');
         }
 
         .background-image::after {
@@ -280,117 +280,16 @@
         <p>© 2025 ODES. All rights reserved.<br>Web Development by ODES.</p>
     </footer>
 
+    <script src="insights/articles/articles.js"></script>
     <script>
-        // Articles data embedded directly (works with file:// protocol)
-        var articlesData = {
-            "article1": {
-                "folder": "article1",
-                "title": "Understanding RF Interference in Satellite Operations",
-                "author": "Dimitra Danovasili",
-                "date": "2025-01-15",
-                "category": "Technical",
-                "description": "A comprehensive analysis of RF interference challenges and mitigation strategies for satellite missions.",
-                "image": "image.jpg",
-                "content": `Understanding RF Interference in Satellite Operations
-Dimitra Danovasili
-January 15, 2025
-
-## Introduction
-
-Radio Frequency (RF) interference represents one of the most critical challenges in modern satellite operations. As the space around Earth becomes increasingly congested with communication satellites, the risk of signal degradation and operational disruptions continues to grow. This article explores the fundamental aspects of RF interference, its impacts on satellite missions, and proven mitigation strategies.
-
-## What is RF Interference?
-
-RF interference occurs when unwanted electromagnetic signals disrupt the intended communication between satellites and ground stations. This interference can originate from various sources:
-
-- **Adjacent Satellite Interference**: Signals from neighboring satellites operating on similar frequencies
-- **Terrestrial Sources**: Ground-based transmitters, cellular networks, and radar systems
-- **Jamming**: Intentional disruption of satellite communications
-- **Intermodulation Products**: Non-linear mixing of multiple signals in satellite transponders
-
-## Impact on Mission Operations
-
-The consequences of RF interference can range from minor signal quality degradation to complete communication loss. Key impacts include:
-
-**Signal Quality Degradation**
-Even minor interference can reduce the signal-to-noise ratio, leading to increased bit error rates and reduced data throughput. For missions requiring high-precision telemetry and command links, this degradation can compromise operational effectiveness.
-
-**Loss of Communication**
-Severe interference can result in complete loss of contact with the spacecraft, potentially jeopardizing mission-critical operations and spacecraft safety. During critical maneuvers or anomaly resolution, this can be catastrophic.
-
-**Increased Operational Costs**
-Dealing with interference requires additional ground station resources, frequency coordination efforts, and potentially switching to backup communication bands or ground stations.
-
-## Detection and Monitoring
-
-Effective RF interference mitigation begins with robust detection and monitoring capabilities:
-
-- **Spectrum Analyzers**: Real-time monitoring of the RF environment to identify interference signatures
-- **Signal Quality Metrics**: Continuous tracking of carrier-to-noise ratios, bit error rates, and signal strength
-- **Automated Alert Systems**: AI-powered systems that can detect anomalous interference patterns and trigger alerts
-
-## Mitigation Strategies
-
-### Frequency Coordination
-
-Proper frequency coordination with regulatory bodies and other satellite operators is essential. This includes:
-
-- Filing frequency assignments with the International Telecommunication Union (ITU)
-- Coordinating with adjacent satellite operators to minimize interference risks
-- Implementing frequency diversity in mission design
-
-### Adaptive Modulation and Coding
-
-Modern satellite communication systems employ adaptive techniques that can adjust to interference conditions:
-
-- **Variable coding rates** that provide additional error correction when interference is detected
-- **Adaptive modulation schemes** that can trade data rate for robustness
-- **Spread spectrum techniques** that distribute signals across wider bandwidths
-
-### Spatial Filtering
-
-Advanced antenna systems can help reject interference through:
-
-- **Narrow beam antennas** that reduce susceptibility to off-axis interference
-- **Adaptive nulling** techniques that can suppress signals from known interference directions
-- **Diversity reception** using multiple ground stations
-
-### Operational Procedures
-
-Well-designed operational procedures are crucial:
-
-- **Interference reporting protocols** for rapid response
-- **Backup communication plans** using alternative frequencies or ground stations
-- **Coordination with regulatory authorities** for interference investigation and resolution
-
-## Validation and Testing
-
-ODES's mission validation platform includes comprehensive RF interference testing capabilities:
-
-- **RF environment simulation** to model various interference scenarios
-- **Hardware-in-the-loop testing** with actual flight hardware exposed to simulated interference
-- **End-to-end communication chain validation** including ground segment and space segment
-- **Automated test sequences** that verify system performance under interference conditions
-
-## Conclusion
-
-As satellite constellations grow and the RF spectrum becomes more crowded, effective RF interference management is more critical than ever. Through a combination of careful mission design, advanced signal processing techniques, robust monitoring capabilities, and comprehensive pre-flight validation, operators can minimize the impact of interference on their missions.
-
-At ODES, we incorporate RF interference considerations into every aspect of mission validation, ensuring that satellites are prepared to operate reliably in today's complex electromagnetic environment. Our platform enables comprehensive testing of interference scenarios before launch, significantly reducing operational risks.
-
----
-
-For more information about ODES's mission validation capabilities and how we can help prepare your satellite for the challenges of the modern RF environment, please contact our team.`
-            }
-        };
-
         // Get article folder from URL parameter
         const urlParams = new URLSearchParams(window.location.search);
         const articleFolder = urlParams.get('article');
 
-        if (articleFolder && articlesData[articleFolder]) {
-            const article = articlesData[articleFolder];
+        // Find the article by folder name
+        const article = window.articlesData.find(a => a.folder === articleFolder);
 
+        if (article) {
             // Set metadata
             document.getElementById('title').textContent = article.title;
             document.getElementById('articleTitle').textContent = article.title + ' - ODES';
@@ -408,65 +307,84 @@ For more information about ODES's mission validation capabilities and how we can
             document.getElementById('articleImage').src = 'insights/articles/' + article.folder + '/' + article.image;
             document.getElementById('articleImage').alt = article.title;
 
-            // Parse embedded content
-            var content = article.content;
+            // Get content from embedded data
+            const content = window.articlesContent[articleFolder];
+            if (content) {
+                parseAndDisplayContent(content);
+            } else {
+                document.getElementById('content').innerHTML = '<p>Error loading article content.</p>';
+            }
+        } else {
+            document.getElementById('content').innerHTML = '<p>Article not found.</p>';
+        }
 
+        function parseAndDisplayContent(content) {
             // Simple markdown-like parsing
             const contentDiv = document.getElementById('content');
             const lines = content.split('\n');
             let html = '';
             let inList = false;
+            let listType = null; // Track 'ul' or 'ol'
 
-            // Skip first 4 lines (title, author, date, blank)
-            for (let i = 4; i < lines.length; i++) {
+            // Skip first 5 lines (title, blank, author, date, blank)
+            for (let i = 5; i < lines.length; i++) {
                 const line = lines[i].trim();
 
                 if (line === '') {
-                    if (inList) {
-                        html += '</ul>';
-                        inList = false;
-                    }
-                    html += '<br>';
+                    // Don't close list on blank lines, just skip
+                    continue;
                 } else if (line.startsWith('## ')) {
                     if (inList) {
-                        html += '</ul>';
+                        html += '</' + listType + '>';
                         inList = false;
+                        listType = null;
                     }
                     html += '<h2>' + line.substring(3) + '</h2>';
                 } else if (line.startsWith('### ')) {
                     if (inList) {
-                        html += '</ul>';
+                        html += '</' + listType + '>';
                         inList = false;
+                        listType = null;
                     }
                     html += '<h3>' + line.substring(4) + '</h3>';
-                } else if (line.startsWith('**') && line.endsWith('**')) {
-                    if (inList) {
-                        html += '</ul>';
-                        inList = false;
-                    }
-                    html += '<h3>' + line.substring(2, line.length - 2) + '</h3>';
                 } else if (line.startsWith('- ')) {
-                    if (!inList) {
+                    if (!inList || listType !== 'ul') {
+                        if (inList) {
+                            html += '</' + listType + '>';
+                        }
                         html += '<ul>';
                         inList = true;
+                        listType = 'ul';
                     }
-                    html += '<li>' + line.substring(2) + '</li>';
+                    let listContent = line.substring(2)
+                        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                        .replace(/\*(.+?)\*/g, '<em>$1</em>');
+                    html += '<li>' + listContent + '</li>';
                 } else if (line.match(/^\d+\.\s/)) {
-                    if (!inList) {
+                    if (!inList || listType !== 'ol') {
+                        if (inList) {
+                            html += '</' + listType + '>';
+                        }
                         html += '<ol>';
                         inList = true;
+                        listType = 'ol';
                     }
-                    html += '<li>' + line.substring(line.indexOf('.') + 2) + '</li>';
+                    let listContent = line.substring(line.indexOf('.') + 2)
+                        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                        .replace(/\*(.+?)\*/g, '<em>$1</em>');
+                    html += '<li>' + listContent + '</li>';
                 } else if (line === '---') {
                     if (inList) {
-                        html += '</ul>';
+                        html += '</' + listType + '>';
                         inList = false;
+                        listType = null;
                     }
                     html += '<hr>';
                 } else {
-                    if (inList && !line.startsWith(' ')) {
-                        html += '</ul>';
+                    if (inList) {
+                        html += '</' + listType + '>';
                         inList = false;
+                        listType = null;
                     }
                     // Process inline formatting
                     let processedLine = line
@@ -477,7 +395,7 @@ For more information about ODES's mission validation capabilities and how we can
             }
 
             if (inList) {
-                html += '</ul>';
+                html += '</' + listType + '>';
             }
 
             contentDiv.innerHTML = html;

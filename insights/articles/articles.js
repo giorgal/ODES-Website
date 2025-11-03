@@ -1,4 +1,18 @@
-Understanding RF Interference in Satellite Operations
+window.articlesData = [
+  {
+    "folder": "article1",
+    "title": "Understanding RF Interference in Satellite Operations",
+    "author": "Dimitra Danovasili",
+    "date": "2025-01-15",
+    "category": "Technical",
+    "description": "A comprehensive analysis of RF interference challenges and mitigation strategies for satellite missions.",
+    "image": "image.jpg",
+    "pdf": "article.pdf"
+  }
+];
+
+window.articlesContent = {
+  "article1": `Understanding RF Interference in Satellite Operations
 
 Author: Dimitra Danovasili
 Date: January 15, 2025
@@ -95,4 +109,5 @@ Organizations launching satellite missions must prioritize RF interference consi
 
 ---
 
-*For more information about comprehensive mission validation and RF interference analysis, contact ODES at info@odes-space.com*
+*For more information about comprehensive mission validation and RF interference analysis, contact ODES at info@odes.space*`
+};
