@@ -148,10 +148,7 @@
             font-size: 3.5rem;
             font-weight: 700;
             margin-bottom: 1rem;
-            background: var(--odes-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--odes-accent);
         }
 
         .page-header p {
@@ -577,16 +574,17 @@
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
-            <a href="index.html"><img src="odes-RGB-reverse.png" alt="ODES" class="logo"></a>
+            <a href="index.html" onclick="navigateToHome(event)"><img src="odes-RGB-reverse.png" alt="ODES" class="logo"></a>
             <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
             <ul class="nav-links" id="navLinks">
-                <li><a href="index.html#about" onclick="markFromInsights()">About</a></li>
-                <li><a href="index.html#capabilities" onclick="markFromInsights()">Capabilities</a></li>
-                <li><a href="index.html#services" onclick="markFromInsights()">Services</a></li>
-                <li><a href="index.html#products" onclick="markFromInsights()">Products</a></li>
-                <li><a href="index.html#projects" onclick="markFromInsights()">Projects</a></li>
-                <li><a href="index.html#team" onclick="markFromInsights()">Team</a></li>
-                <li><a href="insights.html" style="color: var(--odes-purple);">Insights</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="index.html#why-odes" onclick="navigateToSection(event, 'index.html#why-odes')">Why ODES</a></li>
+                <li><a href="index.html#capabilities" onclick="navigateToSection(event, 'index.html#capabilities')">Capabilities</a></li>
+                <li><a href="index.html#services" onclick="navigateToSection(event, 'index.html#services')">Services</a></li>
+                <li><a href="index.html#products" onclick="navigateToSection(event, 'index.html#products')">Products</a></li>
+                <li><a href="index.html#projects" onclick="navigateToSection(event, 'index.html#projects')">Projects</a></li>
+                <li><a href="index.html#team" onclick="navigateToSection(event, 'index.html#team')">Team</a></li>
+                <li><a href="insights.html" class="active">Insights</a></li>
                 <li><a href="#" onclick="openContactModal(); event.preventDefault();" class="cta-button">Get in Touch</a></li>
             </ul>
         </div>
@@ -605,7 +603,7 @@
             <!-- Example article structure (commented out):
             <a href="article-url.html" class="article-card">
                 <div class="article-meta">
-                    <span class="article-date">📅 March 15, 2024</span>
+                    <span class="article-date">March 15, 2024</span>
                     <span class="article-category">Technical</span>
                 </div>
                 <h3>Article Title Here</h3>
@@ -707,8 +705,16 @@
         }
 
         // Mark that user is navigating from insights
-        function markFromInsights() {
+        function navigateToHome(event) {
+            event.preventDefault();
             sessionStorage.setItem('skipSplash', 'true');
+            window.location.href = 'index.html';
+        }
+
+        function navigateToSection(event, url) {
+            event.preventDefault();
+            sessionStorage.setItem('skipSplash', 'true');
+            window.location.href = url;
         }
 
         // Contact Modal Functions
@@ -851,7 +857,7 @@
                     card.innerHTML = `
                         <img src="${imagePath}" alt="${article.title}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
                         <div class="article-meta">
-                            <span class="article-date">📅 ${formattedDate}</span>
+                            <span class="article-date">${formattedDate}</span>
                             <span class="article-category">${article.category}</span>
                         </div>
                         <h3>${article.title}</h3>

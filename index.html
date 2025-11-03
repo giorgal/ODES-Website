@@ -548,6 +548,47 @@
             margin-bottom: 1rem;
         }
 
+        /* Video Container Styles */
+        .video-container {
+            position: relative;
+            transition: transform 0.4s ease, filter 0.4s ease;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .video-container:hover {
+            transform: scale(1.02) translateY(-8px);
+        }
+
+        .video-container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, #667eea, #764ba2, #667eea);
+            background-size: 200% 200%;
+            border-radius: 18px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            animation: gradient-shift 3s ease infinite;
+        }
+
+        .video-container:hover::before {
+            opacity: 0.6;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
         .feature-card p {
             font-size: 1rem;
             color: var(--odes-text);
@@ -962,12 +1003,6 @@
             height: auto;
         }
 
-        /* Cinematic About Section Animations */
-        .about-cinematic.active {
-            opacity: 1 !important;
-            transition: opacity 2s ease-in !important;
-        }
-
         .cinematic-title.active {
             animation: cinematicFadeIn 3s ease-out forwards;
         }
@@ -1338,6 +1373,15 @@
                 padding: 1.5rem;
             }
 
+            /* Mobile Why ODES section */
+            #why-odes > div > div:nth-child(2) {
+                grid-template-columns: 1fr !important;
+            }
+
+            #why-odes > div > div:last-child > div {
+                grid-template-columns: 1fr !important;
+            }
+
             /* Footer mobile */
             footer {
                 padding: 2rem 1rem;
@@ -1481,13 +1525,22 @@
 </head>
 <body>
     <!-- Splash Screen -->
-    <div class="splash-screen" id="splashScreen">
+    <div class="splash-screen" id="splashScreen" style="display: none;">
         <div class="splash-content">
             <div class="splash-text">REMOVE BEFORE FLIGHT</div>
             <div class="splash-tagline">Validation Beyond Boundaries</div>
             <img src="odes-RGB-reverse.png" alt="ODES" class="splash-logo">
         </div>
     </div>
+    <script>
+        // Check skipSplash flag immediately before page renders
+        if (!sessionStorage.getItem('skipSplash')) {
+            document.getElementById('splashScreen').style.display = 'flex';
+        } else {
+            // Clear the flag
+            sessionStorage.removeItem('skipSplash');
+        }
+    </script>
 
     <!-- Single Background Image -->
     <div class="background-container">
@@ -1504,7 +1557,8 @@
             <img src="odes-RGB-reverse.png" alt="ODES" class="logo">
             <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
             <ul class="nav-links" id="navLinks">
-                <li><a href="#about" onclick="closeMobileMenu()">About</a></li>
+                <li><a href="about.html" onclick="closeMobileMenu()">About</a></li>
+                <li><a href="#why-odes" onclick="closeMobileMenu()">Why ODES</a></li>
                 <li><a href="#capabilities" onclick="closeMobileMenu()">Capabilities</a></li>
                 <li><a href="#services" onclick="closeMobileMenu()">Services</a></li>
                 <li><a href="#products" onclick="closeMobileMenu()">Products</a></li>
@@ -1524,65 +1578,59 @@
         </div>
     </section>
 
-    <!-- About ODES -->
-    <section id="about" style="background: rgba(26, 26, 26, 0.3);">
-        <div style="max-width: 900px; margin: 0 auto; text-align: center;">
-            <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; color: var(--odes-accent); margin-bottom: 2rem; letter-spacing: -0.02em;">ODES</h2>
-            <div style="height: 3px; width: 100px; background: var(--odes-gradient); margin: 0 auto 3rem;"></div>
-
-            <p style="font-size: clamp(1.1rem, 2vw, 1.3rem); line-height: 1.9; color: var(--odes-text); margin-bottom: 2rem;">
-                In ancient Greek tragedy, the <em style="color: var(--odes-accent); font-style: italic;">ωδές</em> (odes) were the moments when the chorus stepped forward—not to celebrate victory, but to <strong style="color: var(--odes-accent);">honor the unseen forces</strong> that made victory possible. They sang praises to the gods, to preparation, to the sacred work done in the shadows before glory emerged into light.
-            </p>
-
-            <p style="font-size: clamp(1.1rem, 2vw, 1.3rem); line-height: 1.9; color: var(--odes-text); margin-bottom: 2rem;">
-                Today, the world celebrates the satellite in orbit—the moment of triumph, the spectacular launch, the mission success announcement. But we know a deeper truth: <strong style="color: var(--odes-accent);">missions are not won in orbit.</strong> They are won on the ground.
-            </p>
-
-            <p style="font-size: clamp(1.1rem, 2vw, 1.3rem); line-height: 1.9; color: var(--odes-text); margin-bottom: 2rem;">
-                They are won in the <span style="color: var(--odes-purple); font-weight: 600;">thousand simulations</span> that catch the fatal flaw. In the <span style="color: var(--odes-purple); font-weight: 600;">validation cycles</span> that verify every assumption. In the <span style="color: var(--odes-purple); font-weight: 600;">late nights debugging</span> edge cases that will never make the headlines. In the <span style="color: var(--odes-purple); font-weight: 600;">systematic rigor</span> that transforms hope into certainty.
-            </p>
-
-            <p style="font-size: clamp(1.1rem, 2vw, 1.3rem); line-height: 1.9; color: var(--odes-text); margin-bottom: 2rem;">
-                <strong style="font-size: 1.15em; color: var(--odes-accent); display: block; margin-bottom: 1rem;">This is our ode.</strong>
-                Not to the satellite—but to the engineers who refuse to let it fail. Not to the orbit—but to the ground activities that make the orbit possible. Not to the moment of launch—but to the <em style="color: var(--odes-coral);">cycles of validation</em> that ensure there will be something worth launching.
-            </p>
-
-            <p style="font-size: clamp(1.1rem, 2vw, 1.3rem); line-height: 1.9; color: var(--odes-text); margin-bottom: 2rem;">
-                Like the ancient chorus, we stand in the background. We do not seek the applause. We seek something far more precious: <strong style="color: var(--odes-accent); font-size: 1.1em;">the quiet confidence that when your mission reaches orbit, it will survive.</strong>
-            </p>
-
-            <div style="margin-top: 3rem; padding: 2rem; background: rgba(189, 79, 207, 0.05); border-left: 4px solid var(--odes-purple); border-radius: 4px;">
-                <p style="font-size: clamp(1.15rem, 2.2vw, 1.4rem); line-height: 1.8; color: var(--odes-accent); font-weight: 500; margin: 0; font-style: italic;">
-                    "While others celebrate the stars, we praise the ground that made reaching them possible."
-                </p>
-                <p style="font-size: 0.95rem; color: var(--odes-text); margin-top: 1rem; opacity: 0.7; margin-bottom: 0;">— The ODES Philosophy</p>
+    <!-- Why ODES Section -->
+    <section id="why-odes" style="background: rgba(10, 10, 10, 0.5); padding: 6rem 2rem;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; color: var(--odes-accent); margin-bottom: 1rem; letter-spacing: -0.02em;">Why ODES</h2>
+                <div style="height: 3px; width: 100px; background: var(--odes-gradient); margin: 0 auto;"></div>
             </div>
-        </div>
 
-        <!-- Mission, Vision, Values (part of About section) -->
-        <div style="max-width: 100%; margin: 4rem auto 0; padding: 3rem 0; background: rgba(10, 10, 10, 0.5);">
-            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem;">
-
-                <div class="fade-in-child" style="padding: 2rem; background: rgba(26, 26, 26, 0.5); border-left: 3px solid var(--odes-accent); border-radius: 4px;">
-                    <h3 style="color: var(--odes-accent); font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Vision</h3>
-                    <p style="color: var(--odes-text); line-height: 1.7; margin: 0;">Reduce microsatellite mission failures through accessible, comprehensive validation.</p>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.5rem;">
+                <div class="fade-in-child" style="padding: 2.5rem; background: rgba(26, 26, 26, 0.5); border-left: 3px solid var(--odes-accent); border-radius: 8px;">
+                    <h3 style="color: var(--odes-accent); font-size: 1.5rem; margin-bottom: 1rem; font-weight: 600;">Reduce Mission Risk</h3>
+                    <p style="color: var(--odes-text); line-height: 1.8; margin: 0; font-size: 1.05rem;">Identify and mitigate critical issues before launch through comprehensive simulation and systematic validation workflows.</p>
                 </div>
 
-                <div class="fade-in-child" style="padding: 2rem; background: rgba(26, 26, 26, 0.5); border-left: 3px solid var(--odes-purple); border-radius: 4px;">
-                    <h3 style="color: var(--odes-purple); font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Mission</h3>
-                    <p style="color: var(--odes-text); line-height: 1.7; margin: 0;">Deploy a holistic validation environment that enables comprehensive mission verification and testing.</p>
+                <div class="fade-in-child" style="padding: 2.5rem; background: rgba(26, 26, 26, 0.5); border-left: 3px solid var(--odes-purple); border-radius: 8px;">
+                    <h3 style="color: var(--odes-purple); font-size: 1.5rem; margin-bottom: 1rem; font-weight: 600;">Accelerate Development</h3>
+                    <p style="color: var(--odes-text); line-height: 1.8; margin: 0; font-size: 1.05rem;">Parallel validation processes and automated testing reduce time-to-launch by up to 40% compared to traditional methods.</p>
                 </div>
 
-                <div class="fade-in-child" style="padding: 2rem; background: rgba(26, 26, 26, 0.5); border-left: 3px solid var(--odes-coral); border-radius: 4px;">
-                    <h3 style="color: var(--odes-coral); font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Values</h3>
-                    <p style="color: var(--odes-text); line-height: 1.7; margin: 0;"><strong>Reliability</strong> · <strong>Accessibility</strong> · <strong>Efficiency</strong> · <strong>Empowerment</strong> built on trust, ethics, innovation, and responsibility.</p>
+                <div class="fade-in-child" style="padding: 2.5rem; background: rgba(26, 26, 26, 0.5); border-left: 3px solid var(--odes-coral); border-radius: 8px;">
+                    <h3 style="color: var(--odes-coral); font-size: 1.5rem; margin-bottom: 1rem; font-weight: 600;">Lower Costs</h3>
+                    <p style="color: var(--odes-text); line-height: 1.8; margin: 0; font-size: 1.05rem;">Early issue detection prevents expensive redesigns and mission failures. Reduce validation overhead through automation.</p>
                 </div>
 
-                <div class="fade-in-child" style="padding: 2rem; background: rgba(26, 26, 26, 0.5); border-left: 3px solid var(--odes-grey); border-radius: 4px;">
-                    <h3 style="color: var(--odes-grey); font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Environmental Impact</h3>
-                    <p style="color: var(--odes-text); line-height: 1.7; margin: 0;">Preventing space debris through comprehensive validation—ensuring satellites complete missions and deorbit safely.</p>
+                <div class="fade-in-child" style="padding: 2.5rem; background: rgba(26, 26, 26, 0.5); border-left: 3px solid var(--odes-grey); border-radius: 8px;">
+                    <h3 style="color: var(--odes-grey); font-size: 1.5rem; margin-bottom: 1rem; font-weight: 600;">Ensure Compliance</h3>
+                    <p style="color: var(--odes-text); line-height: 1.8; margin: 0; font-size: 1.05rem;">Automated documentation and traceability satisfy regulatory requirements and customer quality standards.</p>
                 </div>
+            </div>
 
+            <!-- Mission, Vision, Values, Environmental -->
+            <div style="margin-top: 4rem; padding-top: 4rem; border-top: 1px solid var(--odes-border);">
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem;">
+                    <div class="fade-in-child" style="padding: 2rem; background: rgba(26, 26, 26, 0.5); border-left: 3px solid var(--odes-accent); border-radius: 4px;">
+                        <h3 style="color: var(--odes-accent); font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Vision</h3>
+                        <p style="color: var(--odes-text); line-height: 1.7; margin: 0;">Reduce microsatellite mission failures through accessible, comprehensive validation.</p>
+                    </div>
+
+                    <div class="fade-in-child" style="padding: 2rem; background: rgba(26, 26, 26, 0.5); border-left: 3px solid var(--odes-purple); border-radius: 4px;">
+                        <h3 style="color: var(--odes-purple); font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Mission</h3>
+                        <p style="color: var(--odes-text); line-height: 1.7; margin: 0;">Deploy a holistic validation environment that enables comprehensive mission verification and testing.</p>
+                    </div>
+
+                    <div class="fade-in-child" style="padding: 2rem; background: rgba(26, 26, 26, 0.5); border-left: 3px solid var(--odes-coral); border-radius: 4px;">
+                        <h3 style="color: var(--odes-coral); font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Values</h3>
+                        <p style="color: var(--odes-text); line-height: 1.7; margin: 0;"><strong>Reliability</strong> · <strong>Accessibility</strong> · <strong>Efficiency</strong> · <strong>Empowerment</strong> built on trust, ethics, innovation, and responsibility.</p>
+                    </div>
+
+                    <div class="fade-in-child" style="padding: 2rem; background: rgba(26, 26, 26, 0.5); border-left: 3px solid var(--odes-grey); border-radius: 4px;">
+                        <h3 style="color: var(--odes-grey); font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Environmental Footprint</h3>
+                        <p style="color: var(--odes-text); line-height: 1.7; margin: 0;">Preventing space debris through comprehensive validation—ensuring satellites complete missions and deorbit safely.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1651,33 +1699,37 @@
         </div>
 
         <!-- Platform Demo Videos -->
-        <div style="margin: 4rem auto 2rem; max-width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(500px, 100%), 1fr)); gap: 2rem;">
-            <video
-                class="fade-in-child demo-video"
-                muted
-                playsinline
-                webkit-playsinline
-                loop
-                controls
-                preload="metadata"
-                style="width: 100%; height: auto; display: block; border-radius: 8px;"
-            >
-                <source src="video1.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <video
-                class="fade-in-child demo-video"
-                muted
-                playsinline
-                webkit-playsinline
-                loop
-                controls
-                preload="metadata"
-                style="width: 100%; height: auto; display: block; border-radius: 8px;"
-            >
-                <source src="video2.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
+        <div style="margin: 4rem auto 2rem; max-width: 90%; display: flex; flex-direction: column; gap: 3rem;">
+            <div class="video-container fade-in-child">
+                <video
+                    class="demo-video"
+                    muted
+                    playsinline
+                    webkit-playsinline
+                    loop
+                    controls
+                    preload="metadata"
+                    style="width: 100%; height: auto; display: block; border-radius: 16px; box-shadow: 0 20px 60px rgba(102, 126, 234, 0.4), 0 0 40px rgba(118, 75, 162, 0.3);"
+                >
+                    <source src="video1.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="video-container fade-in-child">
+                <video
+                    class="demo-video"
+                    muted
+                    playsinline
+                    webkit-playsinline
+                    loop
+                    controls
+                    preload="metadata"
+                    style="width: 100%; height: auto; display: block; border-radius: 16px; box-shadow: 0 20px 60px rgba(102, 126, 234, 0.4), 0 0 40px rgba(118, 75, 162, 0.3);"
+                >
+                    <source src="video2.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
         </div>
     </section>
 
@@ -1919,11 +1971,6 @@
                 <h4>Romanos Voulgarakis</h4>
                 <div class="team-role">CSO & Co-Founder</div>
                 <p>Specialist in satellite subsystems with deep expertise in ADCS, guidance, navigation, and control systems.</p>
-            </a>
-            <a href="https://www.linkedin.com/in/livanos/" target="_blank" rel="noopener noreferrer" class="team-card fade-in-child">
-                <h4>Nikos Livanos</h4>
-                <div class="team-role">Business Advisor</div>
-                <p>20+ years in embedded systems and strategic business development across aerospace and defense sectors.</p>
             </a>
         </div>
     </section>
@@ -2294,23 +2341,14 @@
         });
 
         window.addEventListener('load', function() {
-            // Check if coming from insights or other internal navigation
-            const skipSplash = sessionStorage.getItem('skipSplash');
+            // Check if we should open contact modal (skipSplash already handled in inline script)
             const shouldOpenContactModal = sessionStorage.getItem('openContactModal');
+            const splash = document.getElementById('splashScreen');
 
-            if (skipSplash) {
-                // Skip splash screen - remove immediately
-                const splash = document.getElementById('splashScreen');
-                if (splash) {
-                    splash.remove();
-                }
-                // Clear the flag
-                sessionStorage.removeItem('skipSplash');
-
-                // Check if we should open contact modal
+            if (!splash || splash.style.display === 'none') {
+                // Splash was skipped - handle contact modal if needed
                 if (shouldOpenContactModal) {
                     sessionStorage.removeItem('openContactModal');
-                    // Open modal after a brief delay to ensure page is ready
                     setTimeout(function() {
                         openContactModal();
                     }, 100);
@@ -2451,6 +2489,7 @@
             // Observe the title element of each section
             var sections = [
                 { id: 'about', selector: '#about h2' },
+                { id: 'why-odes', selector: '#why-odes h2' },
                 { id: 'capabilities', selector: '#capabilities .section-header h2' },
                 { id: 'services', selector: '#services .section-header h2' },
                 { id: 'products', selector: '#products .section-header h2' },
