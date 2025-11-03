@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - ODES</title>
-    <meta name="description" content="Learn about ODES - honoring the unseen forces that make mission success possible.">
+    <title>Philosophy - ODES</title>
+    <meta name="description" content="Learn philosophy ODES - honoring the unseen forces that make mission success possible.">
 
     <!-- SEO & Social Meta Tags -->
-    <meta property="og:title" content="About - ODES">
+    <meta property="og:title" content="Philosophy - ODES">
     <meta property="og:description" content="While others celebrate the stars, we praise the ground that made reaching them possible.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://odes-space.com/about">
+    <meta property="og:url" content="https://odes-space.com/philosophy">
     <meta property="og:image" content="https://odes-space.com/odes-social-card.png">
 
     <!-- Favicon -->
@@ -251,18 +251,18 @@
             }
         }
 
-        /* About Section Specific Styles */
-        #about {
+        /* Philosophy Section Specific Styles */
+        #philosophy {
             background: rgba(26, 26, 26, 0.3);
             padding-top: 120px;
         }
 
-        #about h2 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
+        #philosophy h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
             font-weight: 700;
             color: var(--odes-accent);
             margin-bottom: 2rem;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.01em;
         }
 
         .section-divider {
@@ -272,19 +272,19 @@
             margin: 0 auto 3rem;
         }
 
-        #about p {
+        #philosophy p {
             font-size: clamp(1.1rem, 2vw, 1.3rem);
             line-height: 1.9;
             color: var(--odes-text);
             margin-bottom: 2rem;
         }
 
-        #about em {
+        #philosophy em {
             color: var(--odes-accent);
             font-style: italic;
         }
 
-        #about strong {
+        #philosophy strong {
             color: var(--odes-accent);
         }
 
@@ -388,7 +388,7 @@
                 grid-template-columns: 1fr;
             }
 
-            #about {
+            #philosophy {
                 padding-top: 100px;
             }
 
@@ -661,23 +661,22 @@
             </a>
             <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
             <ul class="nav-links" id="navLinks">
-                <li><a href="about.html" class="active" onclick="closeMobileMenu()">About</a></li>
                 <li><a href="index.html#why-odes" onclick="navigateToSection(event, 'index.html#why-odes')">Why ODES</a></li>
                 <li><a href="index.html#capabilities" onclick="navigateToSection(event, 'index.html#capabilities')">Capabilities</a></li>
                 <li><a href="index.html#services" onclick="navigateToSection(event, 'index.html#services')">Services</a></li>
-                <li><a href="index.html#products" onclick="navigateToSection(event, 'index.html#products')">Products</a></li>
                 <li><a href="index.html#projects" onclick="navigateToSection(event, 'index.html#projects')">Projects</a></li>
                 <li><a href="index.html#team" onclick="navigateToSection(event, 'index.html#team')">Team</a></li>
+                <li><a href="philosophy.html" class="active" onclick="closeMobileMenu()">Philosophy</a></li>
                 <li><a href="insights.html" onclick="closeMobileMenu()">Insights</a></li>
                 <li><a href="#" onclick="openContactModal(); event.preventDefault();" class="cta-button">Get in Touch</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- About ODES -->
-    <section id="about">
+    <!-- Philosophy ODES -->
+    <section id="philosophy">
         <div style="max-width: 900px; margin: 0 auto; text-align: center;">
-            <h2>About</h2>
+            <h2>Philosophy</h2>
             <p>
                 In ancient Greek tragedy, the <em>ωδές</em> (odes) were the moments when the chorus stepped forward—not to celebrate victory, but to honor the unseen forces that made victory possible. They sang praises to the gods, to preparation, to the sacred work done in the shadows before glory emerged into light.
             </p>
@@ -721,7 +720,6 @@
                     <label for="topic">Select topic <span class="required">*</span></label>
                     <select id="topic" name="topic" required>
                         <option value="">Select a topic</option>
-                        <option value="Products">Products</option>
                         <option value="Services">Services</option>
                         <option value="Support">Support</option>
                         <option value="Investment">Investment</option>

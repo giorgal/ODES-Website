@@ -1023,9 +1023,9 @@
         .cinematic-text-6.active { animation-delay: 40s; }
 
         /* Static styles when music is muted/not playing */
-        .about-cinematic .cinematic-title,
-        .about-cinematic .cinematic-divider,
-        .about-cinematic .cinematic-text {
+        .philosophy-cinematic .cinematic-title,
+        .philosophy-cinematic .cinematic-divider,
+        .philosophy-cinematic .cinematic-text {
             opacity: 1;
         }
 
@@ -1554,16 +1554,17 @@
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
-            <img src="odes-RGB-reverse.png" alt="ODES" class="logo">
+            <button onclick="scrollToHero(event)" style="background: none; border: none; padding: 0; cursor: pointer; display: inline-block;">
+                <img src="odes-RGB-reverse.png" alt="ODES" class="logo">
+            </button>
             <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
             <ul class="nav-links" id="navLinks">
-                <li><a href="about.html" onclick="closeMobileMenu()">About</a></li>
                 <li><a href="#why-odes" onclick="closeMobileMenu()">Why ODES</a></li>
                 <li><a href="#capabilities" onclick="closeMobileMenu()">Capabilities</a></li>
                 <li><a href="#services" onclick="closeMobileMenu()">Services</a></li>
-                <li><a href="#products" onclick="closeMobileMenu()">Products</a></li>
                 <li><a href="#projects" onclick="closeMobileMenu()">Projects</a></li>
                 <li><a href="#team" onclick="closeMobileMenu()">Team</a></li>
+                <li><a href="philosophy.html" onclick="closeMobileMenu()">Philosophy</a></li>
                 <li><a href="insights.html" onclick="closeMobileMenu()">Insights</a></li>
                 <li><a href="#contact" class="cta-button" onclick="closeMobileMenu(); openContactModal(); event.preventDefault();">Get in Touch</a></li>
             </ul>
@@ -1582,8 +1583,7 @@
     <section id="why-odes" style="background: rgba(10, 10, 10, 0.5); padding: 6rem 2rem;">
         <div style="max-width: 1200px; margin: 0 auto;">
             <div style="text-align: center; margin-bottom: 4rem;">
-                <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; color: var(--odes-accent); margin-bottom: 1rem; letter-spacing: -0.02em;">Why ODES</h2>
-                <div style="height: 3px; width: 100px; background: var(--odes-gradient); margin: 0 auto;"></div>
+                <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: var(--odes-accent); margin-bottom: 1rem; letter-spacing: -0.01em;">Why ODES</h2>
             </div>
 
             <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.5rem;">
@@ -1737,7 +1737,7 @@
     <section id="services">
         <div class="section-header">
             <h2>Services</h2>
-            <p>Engineering support from proposal to launch</p>
+            <p>End-to-end mission validation and engineering support from proposal to launch</p>
         </div>
         <div class="features-grid" style="grid-template-columns: repeat(auto-fit, minmax(min(350px, 100%), 1fr)); max-width: 1400px; margin: 3rem auto 0;">
 
@@ -1759,10 +1759,6 @@
                     <span style="padding: 0.4rem 0.9rem; background: rgba(183, 169, 201, 0.15); border: 1px solid rgba(183, 169, 201, 0.3); border-radius: 20px; font-size: 0.85rem; color: var(--odes-purple);">Link Budget</span>
                     <span style="padding: 0.4rem 0.9rem; background: rgba(183, 169, 201, 0.15); border: 1px solid rgba(183, 169, 201, 0.3); border-radius: 20px; font-size: 0.85rem; color: var(--odes-purple);">Proposal Writing</span>
                 </div>
-                <div style="margin-top: auto; padding-top: 1.5rem; display: flex; justify-content: space-between; gap: 1rem;">
-                    <a href="#" onclick="openQuoteModal('Proposal & Budget Analysis'); return false;" class="btn-gradient-purple">Request Quote</a>
-                    <a href="#" onclick="openDemoModal('Proposal & Budget Analysis'); return false;" class="btn-gradient-coral">Request a Demo</a>
-                </div>
             </div>
             <div class="feature-card fade-in-child">
                 <svg class="feature-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1780,14 +1776,10 @@
                 <h3>Subsystem Engineering</h3>
                 <p>ADCS, EPS, and RFS analysis throughout design and development.</p>
                 <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
-                    <span style="padding: 0.4rem 0.9rem; background: rgba(226, 92, 63, 0.15); border: 1px solid rgba(226, 92, 63, 0.3); border-radius: 20px; font-size: 0.85rem; color: var(--odes-coral);">ADCS</span>
-                    <span style="padding: 0.4rem 0.9rem; background: rgba(226, 92, 63, 0.15); border: 1px solid rgba(226, 92, 63, 0.3); border-radius: 20px; font-size: 0.85rem; color: var(--odes-coral);">EPS</span>
-                    <span style="padding: 0.4rem 0.9rem; background: rgba(226, 92, 63, 0.15); border: 1px solid rgba(226, 92, 63, 0.3); border-radius: 20px; font-size: 0.85rem; color: var(--odes-coral);">RFS</span>
-                    <span style="padding: 0.4rem 0.9rem; background: rgba(226, 92, 63, 0.15); border: 1px solid rgba(226, 92, 63, 0.3); border-radius: 20px; font-size: 0.85rem; color: var(--odes-coral);">Design Support</span>
-                </div>
-                <div style="margin-top: auto; padding-top: 1.5rem; display: flex; justify-content: space-between; gap: 1rem;">
-                    <a href="#" onclick="openQuoteModal('Subsystem Engineering'); return false;" class="btn-gradient-purple">Request Quote</a>
-                    <a href="#" onclick="openDemoModal('Subsystem Engineering'); return false;" class="btn-gradient-coral">Request a Demo</a>
+                    <span style="padding: 0.4rem 0.9rem; background: rgba(183, 169, 201, 0.15); border: 1px solid rgba(183, 169, 201, 0.3); border-radius: 20px; font-size: 0.85rem; color: var(--odes-purple);">ADCS</span>
+                    <span style="padding: 0.4rem 0.9rem; background: rgba(183, 169, 201, 0.15); border: 1px solid rgba(183, 169, 201, 0.3); border-radius: 20px; font-size: 0.85rem; color: var(--odes-purple);">EPS</span>
+                    <span style="padding: 0.4rem 0.9rem; background: rgba(183, 169, 201, 0.15); border: 1px solid rgba(183, 169, 201, 0.3); border-radius: 20px; font-size: 0.85rem; color: var(--odes-purple);">RFS</span>
+                    <span style="padding: 0.4rem 0.9rem; background: rgba(183, 169, 201, 0.15); border: 1px solid rgba(183, 169, 201, 0.3); border-radius: 20px; font-size: 0.85rem; color: var(--odes-purple);">Design Support</span>
                 </div>
             </div>
             <div class="feature-card fade-in-child">
@@ -1804,10 +1796,6 @@
                     <span style="padding: 0.4rem 0.9rem; background: rgba(183, 169, 201, 0.15); border: 1px solid rgba(183, 169, 201, 0.3); border-radius: 20px; font-size: 0.85rem; color: var(--odes-purple);">Real-Time Testing</span>
                     <span style="padding: 0.4rem 0.9rem; background: rgba(183, 169, 201, 0.15); border: 1px solid rgba(183, 169, 201, 0.3); border-radius: 20px; font-size: 0.85rem; color: var(--odes-purple);">Environment Modeling</span>
                 </div>
-                <div style="margin-top: auto; padding-top: 1.5rem; display: flex; justify-content: space-between; gap: 1rem;">
-                    <a href="#" onclick="openQuoteModal('Operational Simulator'); return false;" class="btn-gradient-purple">Request Quote</a>
-                    <a href="#" onclick="openDemoModal('Operational Simulator'); return false;" class="btn-gradient-coral">Request a Demo</a>
-                </div>
             </div>
             <div class="feature-card fade-in-child">
                 <svg class="feature-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1817,27 +1805,13 @@
                 <h3>Software Validation Facility</h3>
                 <p>Comprehensive flight software testing with automated test generation and code coverage analysis.</p>
                 <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
-                    <span style="padding: 0.4rem 0.9rem; background: rgba(226, 92, 63, 0.15); border: 1px solid rgba(226, 92, 63, 0.3); border-radius: 20px; font-size: 0.85rem; color: var(--odes-coral);">Test Automation</span>
-                    <span style="padding: 0.4rem 0.9rem; background: rgba(226, 92, 63, 0.15); border: 1px solid rgba(226, 92, 63, 0.3); border-radius: 20px; font-size: 0.85rem; color: var(--odes-coral);">Code Coverage</span>
-                    <span style="padding: 0.4rem 0.9rem; background: rgba(226, 92, 63, 0.15); border: 1px solid rgba(226, 92, 63, 0.3); border-radius: 20px; font-size: 0.85rem; color: var(--odes-coral);">Regression Testing</span>
-                </div>
-                <div style="margin-top: auto; padding-top: 1.5rem; display: flex; justify-content: space-between; gap: 1rem;">
-                    <a href="#" onclick="openQuoteModal('Software Validation Facility'); return false;" class="btn-gradient-purple">Request Quote</a>
-                    <a href="#" onclick="openDemoModal('Software Validation Facility'); return false;" class="btn-gradient-coral">Request a Demo</a>
+                    <span style="padding: 0.4rem 0.9rem; background: rgba(183, 169, 201, 0.15); border: 1px solid rgba(183, 169, 201, 0.3); border-radius: 20px; font-size: 0.85rem; color: var(--odes-purple);">Test Automation</span>
+                    <span style="padding: 0.4rem 0.9rem; background: rgba(183, 169, 201, 0.15); border: 1px solid rgba(183, 169, 201, 0.3); border-radius: 20px; font-size: 0.85rem; color: var(--odes-purple);">Code Coverage</span>
+                    <span style="padding: 0.4rem 0.9rem; background: rgba(183, 169, 201, 0.15); border: 1px solid rgba(183, 169, 201, 0.3); border-radius: 20px; font-size: 0.85rem; color: var(--odes-purple);">Regression Testing</span>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Products -->
-    <section id="products" style="background: rgba(26, 26, 26, 0.3);">
-        <div class="section-header">
-            <h2>Products</h2>
-            <p>Tools for satellite network operators</p>
-        </div>
-        <div style="max-width: 1000px; margin: 3rem auto 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(400px, 100%), 1fr)); gap: 2rem; padding: 0 1rem;">
-            <div class="feature-card fade-in-child" style="text-align: center;">
-                <svg class="feature-icon" style="margin: 0 auto 1.5rem;" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <div class="feature-card fade-in-child">
+                <svg class="feature-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="16" cy="24" r="10" stroke="#ffffff" stroke-width="2" fill="none"/>
                     <circle cx="32" cy="24" r="10" stroke="#ffffff" stroke-width="2" fill="none"/>
                     <path d="M20 18 L28 18 M20 24 L28 24 M20 30 L28 30" stroke="#e25c3f" stroke-width="2"/>
@@ -1850,34 +1824,10 @@
                     <span style="padding: 0.4rem 0.9rem; background: rgba(183, 169, 201, 0.15); border: 1px solid rgba(183, 169, 201, 0.3); border-radius: 20px; font-size: 0.85rem; color: var(--odes-purple);">Network Coordination</span>
                     <span style="padding: 0.4rem 0.9rem; background: rgba(183, 169, 201, 0.15); border: 1px solid rgba(183, 169, 201, 0.3); border-radius: 20px; font-size: 0.85rem; color: var(--odes-purple);">Automated Reports</span>
                 </div>
-                <div style="margin-top: auto; padding-top: 1.5rem; display: flex; justify-content: space-between; gap: 1rem;">
-                    <a href="#" onclick="openQuoteModal('Interference Resolution Tool'); return false;" class="btn-gradient-purple">Request Quote</a>
-                    <a href="#" onclick="openDemoModal('Interference Resolution Tool'); return false;" class="btn-gradient-coral">Request a Demo</a>
-                </div>
             </div>
-
-            <div class="feature-card fade-in-child" style="text-align: center; position: relative;">
-                <div style="position: absolute; top: 1rem; right: 1rem; background: linear-gradient(135deg, var(--odes-purple), var(--odes-coral)); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; color: white; text-transform: uppercase; letter-spacing: 0.5px;">Upcoming</div>
-                <svg class="feature-icon" style="margin: 0 auto 1.5rem;" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="24" cy="24" r="18" stroke="#ffffff" stroke-width="2" fill="none"/>
-                    <circle cx="24" cy="24" r="12" stroke="#b7a9c9" stroke-width="2" fill="none"/>
-                    <circle cx="24" cy="24" r="6" stroke="#e25c3f" stroke-width="2" fill="none"/>
-                    <line x1="24" y1="6" x2="24" y2="12" stroke="#ffffff" stroke-width="2"/>
-                    <line x1="24" y1="36" x2="24" y2="42" stroke="#ffffff" stroke-width="2"/>
-                    <line x1="6" y1="24" x2="12" y2="24" stroke="#ffffff" stroke-width="2"/>
-                    <line x1="36" y1="24" x2="42" y2="24" stroke="#ffffff" stroke-width="2"/>
-                </svg>
-                <h3>Holistic Simulator</h3>
-                <p>End-to-end mission simulation platform integrating orbital dynamics, subsystem behavior, and environmental effects for comprehensive validation.</p>
-                <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
-                    <span style="padding: 0.4rem 0.9rem; background: rgba(226, 92, 63, 0.15); border: 1px solid rgba(226, 92, 63, 0.3); border-radius: 20px; font-size: 0.85rem; color: var(--odes-coral);">Mission Simulation</span>
-                    <span style="padding: 0.4rem 0.9rem; background: rgba(226, 92, 63, 0.15); border: 1px solid rgba(226, 92, 63, 0.3); border-radius: 20px; font-size: 0.85rem; color: var(--odes-coral);">Subsystem Integration</span>
-                    <span style="padding: 0.4rem 0.9rem; background: rgba(226, 92, 63, 0.15); border: 1px solid rgba(226, 92, 63, 0.3); border-radius: 20px; font-size: 0.85rem; color: var(--odes-coral);">Environment Modeling</span>
-                </div>
-                <div style="margin-top: auto; padding-top: 1.5rem;">
-                    <a href="#" onclick="openInfoModal('Holistic Simulator'); return false;" class="btn-gradient-purple" style="width: 100%; text-align: center;">Request Information</a>
-                </div>
-            </div>
+        </div>
+        <div style="text-align: center; margin-top: 3rem;">
+            <button onclick="openDemoModal()" class="btn-gradient-coral" style="padding: 1rem 3rem; font-size: 1.1rem; border: none; cursor: pointer;">Request Demo</button>
         </div>
     </section>
 
@@ -1893,18 +1843,24 @@
             <!-- Service Projects -->
             <div style="margin-top: 3rem;">
                 <h3 style="color: var(--odes-accent); font-size: 1.3rem; text-align: center; margin-bottom: 2rem; font-weight: 600;">Validation & Simulation Services</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr)); gap: 3rem; max-width: 1000px; margin: 0 auto; align-items: stretch;">
-                    <a href="https://emtech.global/hsd-historic/" target="_blank" rel="noopener noreferrer" class="project-card fade-in-child" style="flex-direction: column; gap: 1.5rem; text-decoration: none;">
-                        <img src="missions/hsd-badge-300x289.png" alt="Hellenic Space Dawn" style="max-width: 100%; height: auto; max-height: 150px; object-fit: contain;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 3rem; max-width: 1400px; margin: 0 auto; align-items: stretch;">
+                    <a href="https://emtech.global/hsd-historic/" target="_blank" rel="noopener noreferrer" class="testimonial-card fade-in-child" style="text-decoration: none; display: flex; flex-direction: column; gap: 1.5rem;">
+                        <img src="missions/hsd-badge-300x289.png" alt="Hellenic Space Dawn" style="max-width: 100%; height: auto; max-height: 240px; object-fit: contain; margin: 0 auto;">
                         <h4 style="font-size: 1.1rem; font-weight: 600; color: var(--odes-accent); margin: 0; text-align: center;">Hellenic Space Dawn</h4>
+                        <p class="testimonial-quote" style="margin-top: auto;">"Working with ODES has been instrumental in validating our mission operations before launch. Their comprehensive simulation platform allowed us to identify critical issues early in the development cycle."</p>
+                        <div class="testimonial-author">Nikolaos Livanos <br>Mission Manager</div>
                     </a>
-                    <a href="https://hub.uoa.gr/ermis-project/" target="_blank" rel="noopener noreferrer" class="project-card fade-in-child" style="flex-direction: column; gap: 1.5rem; text-decoration: none;">
-                        <img src="missions/ermis_logo.png" alt="ERMIS" style="max-width: 100%; height: auto; max-height: 150px; object-fit: contain;">
+                    <a href="https://hub.uoa.gr/ermis-project/" target="_blank" rel="noopener noreferrer" class="testimonial-card fade-in-child" style="text-decoration: none; display: flex; flex-direction: column; gap: 1.5rem;">
+                        <img src="missions/ermis_logo.png" alt="ERMIS" style="max-width: 100%; height: auto; max-height: 240px; object-fit: contain; margin: 0 auto;">
                         <h4 style="font-size: 1.1rem; font-weight: 600; color: var(--odes-accent); margin: 0; text-align: center;">ERMIS</h4>
+                        <p class="testimonial-quote" style="margin-top: auto;">"The ODES validation platform provided us with the confidence we needed to move forward with our mission. Their tools caught edge cases that would have been costly to discover in orbit."</p>
+                        <div class="testimonial-author">Vaios Lappas <br>Mission Manager</div>
                     </a>
-                    <div class="project-card fade-in-child" style="flex-direction: column; gap: 1.5rem;">
-                        <img src="missions/dimokriteio_logo_gr-en.png" alt="DUTHSAT-2" style="max-width: 100%; height: auto; max-height: 150px; object-fit: contain;">
+                    <div class="testimonial-card fade-in-child" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                        <img src="missions/dimokriteio_logo_gr-en.png" alt="DUTHSAT-2" style="max-width: 100%; height: auto; max-height: 240px; object-fit: contain; margin: 0 auto;">
                         <h4 style="font-size: 1.1rem; font-weight: 600; color: var(--odes-accent); margin: 0; text-align: center;">DUTHSAT-2</h4>
+                        <p class="testimonial-quote" style="margin-top: auto;">"ODES' systematic approach to mission validation helped us maintain agility while ensuring nothing was overlooked. Their platform is essential for modern space operations."</p>
+                        <div class="testimonial-author">Theodoros Sarris <br>Mission Manager</div>
                     </div>
                 </div>
             </div>
@@ -1912,39 +1868,13 @@
             <!-- Product Projects -->
             <div style="margin-top: 5rem;">
                 <h3 style="color: var(--odes-accent); font-size: 1.3rem; text-align: center; margin-bottom: 2rem; font-weight: 600;">Interference Resolution Tool</h3>
-                <div style="display: flex; justify-content: center; max-width: 400px; margin: 0 auto;">
-                    <a href="https://open-cosmos.com/" target="_blank" rel="noopener noreferrer" class="project-card fade-in-child" style="flex-direction: column; gap: 1.5rem; text-decoration: none; width: 100%;">
-                        <img src="missions/opencosmos.png" alt="Open Cosmos" style="max-width: 100%; height: auto; max-height: 150px; object-fit: contain;">
+                <div style="display: flex; justify-content: center; max-width: 500px; margin: 0 auto;">
+                    <a href="https://open-cosmos.com/" target="_blank" rel="noopener noreferrer" class="testimonial-card fade-in-child" style="text-decoration: none; display: flex; flex-direction: column; gap: 1.5rem; width: 100%;">
+                        <img src="missions/opencosmos.png" alt="Open Cosmos" style="max-width: 100%; height: auto; max-height: 120px; object-fit: contain; margin: 0 auto;">
                         <h4 style="font-size: 1.1rem; font-weight: 600; color: var(--odes-accent); margin: 0; text-align: center;">Open Cosmos</h4>
+                        <p class="testimonial-quote" style="margin-top: auto;">"The ODES Interference Resolution Tool has streamlined our RF coordination process significantly. Their solution helps us quickly identify and resolve conflicts in our satellite constellation operations."</p>
+                        <div class="testimonial-author">Panagiotis Touzopoulos <br>Mission Manager</div>
                     </a>
-                </div>
-            </div>
-
-            <!-- Mission Responsibles Testimonials -->
-            <div class="section-header" style="margin-top: 6rem;">
-                <h2>What Mission Managers Say</h2>
-                <div class="gradient-divider" style="margin-top: 1.5rem;"></div>
-            </div>
-            <div class="testimonial-grid">
-                <div class="testimonial-card fade-in-child">
-                    <p class="testimonial-quote">"Working with ODES has been instrumental in validating our mission operations before launch. Their comprehensive simulation platform allowed us to identify critical issues early in the development cycle."</p>
-                    <div class="testimonial-author">Nikolaos Livanos <br>Mission Manager</div>
-                    <div class="testimonial-role">Hellenic Space Dawn Mission</div>
-                </div>
-                <div class="testimonial-card fade-in-child">
-                    <p class="testimonial-quote">"The ODES validation platform provided us with the confidence we needed to move forward with our mission. Their tools caught edge cases that would have been costly to discover in orbit."</p>
-                    <div class="testimonial-author">Vaios Lappas <br>Mission Manager</div>
-                    <div class="testimonial-role">ERMIS Mission</div>
-                </div>
-                <div class="testimonial-card fade-in-child">
-                    <p class="testimonial-quote">"ODES' systematic approach to mission validation helped us maintain agility while ensuring nothing was overlooked. Their platform is essential for modern space operations."</p>
-                    <div class="testimonial-author">Theodoros Sarris <br>Mission Manager</div>
-                    <div class="testimonial-role">DUTHSAT-2 Mission</div>
-                </div>
-                <div class="testimonial-card fade-in-child">
-                    <p class="testimonial-quote">"The ODES Interference Resolution Tool has streamlined our RF coordination process significantly. Their solution helps us quickly identify and resolve conflicts in our satellite constellation operations."</p>
-                    <div class="testimonial-author">Panagiotis Touzopoulos <br>Mission Manager</div>
-                    <div class="testimonial-role">Open Cosmos</div>
                 </div>
             </div>
         </div>
@@ -2091,75 +2021,16 @@
         </div>
     </div>
 
-    <!-- Request Quote Modal -->
-    <div id="quoteModal" class="modal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeQuoteModal()">&times;</button>
-            <div class="modal-header">
-                <h2>Request Quote</h2>
-                <p id="quoteServiceName" style="color: var(--odes-purple); font-weight: 600;"></p>
-            </div>
-            <form id="quoteForm" action="https://formspree.io/f/xdkppwln" method="POST" onsubmit="return handleQuoteSubmit(event)">
-                <input type="hidden" id="quoteService" name="service">
-
-                <div class="form-group">
-                    <label for="quoteFullName">Full Name <span class="required">*</span></label>
-                    <input type="text" id="quoteFullName" name="fullName" placeholder="Full Name" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="quoteEmail">Email <span class="required">*</span></label>
-                    <input type="email" id="quoteEmail" name="email" placeholder="you@email.com" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="quotePhone">Phone Number <span class="required">*</span></label>
-                    <input type="tel" id="quotePhone" name="phone" placeholder="Phone Number" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="quoteOrganization">Organization <span class="required">*</span></label>
-                    <input type="text" id="quoteOrganization" name="organization" placeholder="Organization name" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="quoteCountry">Country <span class="required">*</span></label>
-                    <input type="text" id="quoteCountry" name="country" placeholder="Greece" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="quoteMessage">Describe your mission <span class="required">*</span></label>
-                    <textarea id="quoteMessage" name="message" placeholder="Describe your mission" maxlength="10000" required oninput="updateQuoteCharCount()"></textarea>
-                    <div class="char-count"><span id="quoteCharCount">0</span> of 10000 max characters</div>
-                </div>
-
-                <div class="form-group">
-                    <label for="quoteCaptcha">Verify you're human <span class="required">*</span></label>
-                    <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
-                        <span id="quoteCaptchaQuestion" style="font-size: 1.1rem; font-weight: 600; color: var(--odes-accent);"></span>
-                        <input type="text" id="quoteCaptcha" name="captcha-answer" placeholder="Your answer" required style="flex: 0 1 120px; text-align: center;">
-                    </div>
-                    <div id="quoteCaptchaError" style="color: var(--odes-coral); margin-top: 0.5rem; font-size: 0.9rem; display: none;">Incorrect answer. Please try again.</div>
-                </div>
-
-                <input type="hidden" name="_replyto" id="quoteReplyto">
-
-                <button type="submit" class="form-submit" id="quoteSubmitBtn">Send Request</button>
-                <div id="quoteFormStatus" style="margin-top: 1rem; text-align: center; display: none;"></div>
-            </form>
-        </div>
-    </div>
-
     <!-- Request Demo Modal -->
     <div id="demoModal" class="modal">
         <div class="modal-content">
             <button class="modal-close" onclick="closeDemoModal()">&times;</button>
             <div class="modal-header">
                 <h2>Request a Demo</h2>
-                <p id="demoServiceName" style="color: var(--odes-coral); font-weight: 600;"></p>
+                <p style="color: var(--odes-coral); font-weight: 600;">Experience our validation platform firsthand</p>
             </div>
             <form id="demoForm" action="https://formspree.io/f/xdkppwln" method="POST" onsubmit="return handleDemoSubmit(event)">
-                <input type="hidden" id="demoService" name="service">
+                <input type="hidden" name="form_type" value="Demo Request">
 
                 <div class="form-group">
                     <label for="demoFullName">Full Name <span class="required">*</span></label>
@@ -2187,8 +2058,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="demoMessage">Describe your mission <span class="required">*</span></label>
-                    <textarea id="demoMessage" name="message" placeholder="Describe your mission" maxlength="10000" required oninput="updateDemoCharCount()"></textarea>
+                    <label for="demoMessage">Tell us philosophy your mission <span class="required">*</span></label>
+                    <textarea id="demoMessage" name="message" placeholder="Describe your mission and what you'd like to see in the demo" maxlength="10000" required oninput="updateDemoCharCount()"></textarea>
                     <div class="char-count"><span id="demoCharCount">0</span> of 10000 max characters</div>
                 </div>
 
@@ -2247,8 +2118,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="infoMessage">Tell us about your interest <span class="required">*</span></label>
-                    <textarea id="infoMessage" name="message" placeholder="What would you like to know about this product?" maxlength="10000" required oninput="updateInfoCharCount()"></textarea>
+                    <label for="infoMessage">Tell us philosophy your interest <span class="required">*</span></label>
+                    <textarea id="infoMessage" name="message" placeholder="What would you like to know philosophy this product?" maxlength="10000" required oninput="updateInfoCharCount()"></textarea>
                     <div class="char-count"><span id="infoCharCount">0</span> of 10000 max characters</div>
                 </div>
 
@@ -2388,6 +2259,12 @@
             navLinks.classList.remove('active');
         }
 
+        function scrollToHero(event) {
+            event.preventDefault();
+            sessionStorage.setItem('skipSplash', 'true');
+            document.getElementById('hero').scrollIntoView({ behavior: 'smooth' });
+        }
+
         // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -2488,11 +2365,10 @@
 
             // Observe the title element of each section
             var sections = [
-                { id: 'about', selector: '#about h2' },
+                { id: 'philosophy', selector: '#philosophy h2' },
                 { id: 'why-odes', selector: '#why-odes h2' },
                 { id: 'capabilities', selector: '#capabilities .section-header h2' },
                 { id: 'services', selector: '#services .section-header h2' },
-                { id: 'products', selector: '#products .section-header h2' },
                 { id: 'projects', selector: '#projects .section-header h2' },
                 { id: 'team', selector: '#team .section-header h2' }
             ];
@@ -2701,116 +2577,13 @@
         }
 
         // ========================================
-        // Quote Modal Functions
-        // ========================================
-
-        function openQuoteModal(serviceName) {
-            const modal = document.getElementById('quoteModal');
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-
-            document.getElementById('quoteServiceName').textContent = serviceName;
-            document.getElementById('quoteService').value = serviceName;
-            generateQuoteCaptcha();
-        }
-
-        function closeQuoteModal() {
-            const modal = document.getElementById('quoteModal');
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        function updateQuoteCharCount() {
-            const message = document.getElementById('quoteMessage');
-            const charCount = document.getElementById('quoteCharCount');
-            charCount.textContent = message.value.length;
-        }
-
-        let quoteCaptchaAnswer = 0;
-
-        function generateQuoteCaptcha() {
-            const num1 = Math.floor(Math.random() * 10) + 1;
-            const num2 = Math.floor(Math.random() * 10) + 1;
-            quoteCaptchaAnswer = num1 + num2;
-            document.getElementById('quoteCaptchaQuestion').textContent = `${num1} + ${num2} = ?`;
-            document.getElementById('quoteCaptcha').value = '';
-            document.getElementById('quoteCaptchaError').style.display = 'none';
-        }
-
-        function verifyQuoteCaptcha() {
-            const userAnswer = parseInt(document.getElementById('quoteCaptcha').value);
-            return userAnswer === quoteCaptchaAnswer;
-        }
-
-        async function handleQuoteSubmit(event) {
-            event.preventDefault();
-
-            if (!verifyQuoteCaptcha()) {
-                document.getElementById('quoteCaptchaError').style.display = 'block';
-                generateQuoteCaptcha();
-                return false;
-            }
-
-            const form = document.getElementById('quoteForm');
-            const submitBtn = document.getElementById('quoteSubmitBtn');
-            const formStatus = document.getElementById('quoteFormStatus');
-            const userEmail = document.getElementById('quoteEmail').value;
-
-            document.getElementById('quoteReplyto').value = userEmail;
-
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Sending...';
-
-            try {
-                const formData = new FormData(form);
-
-                const response = await fetch(form.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                });
-
-                if (response.ok) {
-                    formStatus.style.display = 'block';
-                    formStatus.style.color = 'var(--odes-accent)';
-                    formStatus.textContent = 'Thank you! Your request has been sent successfully.';
-
-                    setTimeout(() => {
-                        form.reset();
-                        updateQuoteCharCount();
-                        generateQuoteCaptcha();
-                        closeQuoteModal();
-                        formStatus.style.display = 'none';
-                        submitBtn.disabled = false;
-                        submitBtn.textContent = 'Send Request';
-                    }, 2000);
-                } else {
-                    throw new Error('Form submission failed');
-                }
-            } catch (error) {
-                formStatus.style.display = 'block';
-                formStatus.style.color = 'var(--odes-coral)';
-                formStatus.textContent = 'Oops! There was a problem sending your request. Please try again.';
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Send Request';
-            }
-
-            return false;
-        }
-
-        // ========================================
         // Demo Modal Functions
         // ========================================
 
-        function openDemoModal(serviceName) {
+        function openDemoModal() {
             const modal = document.getElementById('demoModal');
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
-
-            document.getElementById('demoServiceName').textContent = serviceName;
-            document.getElementById('demoService').value = serviceName;
             generateDemoCaptcha();
         }
 
@@ -2875,7 +2648,7 @@
                 if (response.ok) {
                     formStatus.style.display = 'block';
                     formStatus.style.color = 'var(--odes-accent)';
-                    formStatus.textContent = 'Thank you! Your request has been sent successfully.';
+                    formStatus.textContent = 'Thank you! Your demo request has been sent successfully.';
 
                     setTimeout(() => {
                         form.reset();

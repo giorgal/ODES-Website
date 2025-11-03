@@ -78,15 +78,15 @@
             width: 100%;
             top: 0;
             z-index: 1000;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--odes-border);
-            padding: 1.2rem 2rem;
         }
 
         .nav-container {
             max-width: 1400px;
             margin: 0 auto;
+            padding: 1.2rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -259,7 +259,7 @@
 
     <nav>
         <div class="nav-container">
-            <a href="index.html"><img src="odes-RGB-reverse.png" alt="ODES" class="logo"></a>
+            <a href="index.html" onclick="navigateToHome(event)"><img src="odes-RGB-reverse.png" alt="ODES" class="logo"></a>
             <a href="insights.html" class="back-link">← Back to Insights</a>
         </div>
     </nav>
@@ -286,6 +286,13 @@
 
     <script src="insights/articles/articles.js"></script>
     <script>
+        // Navigate to home function
+        function navigateToHome(event) {
+            event.preventDefault();
+            sessionStorage.setItem('skipSplash', 'true');
+            window.location.href = 'index.html';
+        }
+
         // Get article folder from URL parameter
         const urlParams = new URLSearchParams(window.location.search);
         const articleFolder = urlParams.get('article');
