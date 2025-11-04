@@ -126,6 +126,6 @@ All icons are hand-crafted SVG components rather than using an icon library. Thi
 
 - The logo file (`odes-RGB-reverse.png`) must be in the same directory as the HTML file
 - All anchor links use hash navigation (`#about`, `#solution`, etc.)
-- Email contact: `info@odes-space.com`
+- Email contact: `info@oodes.space`
 - No backend or API integrations
 - No analytics or tracking code included

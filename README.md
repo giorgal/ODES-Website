@@ -51,7 +51,12 @@ ODES-Website/
 ├── video2.mp4                      # Demo video 2
 ├── insights/
 │   └── articles/
-│       └── articles.js            # Article data and metadata
+│       ├── articles.js            # Article metadata (titles, authors, dates, etc.)
+│       ├── README.md              # Instructions for adding articles
+│       └── article1/
+│           ├── article.md         # Article content (markdown)
+│           ├── image.jpg          # Article thumbnail image
+│           └── article.pdf        # PDF version (optional)
 ├── missions/                       # Mission-related assets
 ├── CLAUDE.md                       # AI assistant guidance
 ├── ASSETS-NEEDED.md               # Asset requirements documentation
@@ -107,12 +112,28 @@ No build process required - simply edit HTML files directly and refresh the brow
 ## 📝 Content Management
 
 ### Adding New Articles (Insights)
-1. Edit `/insights/articles/articles.js` to add article metadata
-2. Create new HTML file using `article-template.html` as reference
-3. Update `insights.html` if manual article list management is needed
+1. Create a new folder in `/insights/articles/` (e.g., `article2/`)
+2. Add three files to your article folder:
+   - `article.md` - Article content in markdown format
+   - `image.jpg` - Thumbnail image for the article card
+   - `article.pdf` - (Optional) PDF version of the article
+3. Update `/insights/articles/articles.js` to add your article metadata:
+   ```javascript
+   {
+     "folder": "article2",
+     "title": "Your Article Title",
+     "author": "Author Name",
+     "date": "2025-01-15",
+     "category": "Technical",
+     "description": "Brief description for the article card",
+     "image": "image.jpg",
+     "pdf": "article.pdf"
+   }
+   ```
+4. See `/insights/articles/README.md` for detailed instructions
 
 ### Updating Contact Information
-- Email: `info@odes-space.com`
+- Email: `info@oodes.space`
 - Contact forms use Formspree endpoints (configured in HTML)
 - Three form types: General Contact, Demo Request, Info Request
 
@@ -207,8 +228,8 @@ Currently no analytics tracking is implemented. To add:
 ## 📞 Support
 
 For technical issues or questions:
-- Email: info@odes-space.com
-- Website: [ODES Space](https://odes-space.com)
+- Email: info@oodes.space
+- Website: [ODES Space](https://oodes.space)
 
 ---
 
