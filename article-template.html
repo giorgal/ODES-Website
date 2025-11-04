@@ -318,13 +318,21 @@
             document.getElementById('articleImage').src = 'insights/articles/' + article.folder + '/' + article.image;
             document.getElementById('articleImage').alt = article.title;
 
-            // Get content from embedded data
-            const content = window.articlesContent[articleFolder];
-            if (content) {
-                parseAndDisplayContent(content);
-            } else {
-                document.getElementById('content').innerHTML = '<p>Error loading article content.</p>';
-            }
+            // Fetch markdown content from article folder
+            fetch('insights/articles/' + articleFolder + '/article.md')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Article content not found');
+                    }
+                    return response.text();
+                })
+                .then(content => {
+                    parseAndDisplayContent(content);
+                })
+                .catch(error => {
+                    console.error('Error loading article:', error);
+                    document.getElementById('content').innerHTML = '<p>Error loading article content.</p>';
+                });
         } else {
             document.getElementById('content').innerHTML = '<p>Article not found.</p>';
         }
