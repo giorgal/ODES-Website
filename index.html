@@ -139,6 +139,29 @@
         .fade-in-child:nth-child(5) { animation-delay: 0.5s; }
         .fade-in-child:nth-child(6) { animation-delay: 0.6s; }
 
+        /* Why ODES card hover effects */
+        .why-odes-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--odes-gradient);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .why-odes-card:hover {
+            background: rgba(26, 26, 26, 0.7) !important;
+            border-color: var(--odes-purple) !important;
+            transform: translateY(-4px);
+        }
+
+        .why-odes-card:hover::before {
+            opacity: 1;
+        }
+
         /* Section header animation */
         .section-header {
             opacity: 0;
@@ -1483,8 +1506,7 @@
     <!-- Splash Screen -->
     <div class="splash-screen" id="splashScreen" style="display: none;">
         <div class="splash-content">
-            <div class="splash-text">REMOVE BEFORE FLIGHT</div>
-            <div class="splash-tagline">Validation Beyond Boundaries</div>
+            <div class="splash-text">VALIDATE BEFORE FLIGHT</div>
             <img src="odes-RGB-reverse.png" alt="ODES" class="splash-logo">
         </div>
     </div>
@@ -1518,10 +1540,10 @@
                 <li><a href="#why-odes" onclick="closeMobileMenu()">Why ODES</a></li>
                 <li><a href="#capabilities" onclick="closeMobileMenu()">Capabilities</a></li>
                 <li><a href="#services" onclick="closeMobileMenu()">Services</a></li>
-                <li><a href="#projects" onclick="closeMobileMenu()">Projects</a></li>
+                <!-- <li><a href="#projects" onclick="closeMobileMenu()">Projects</a></li> -->
                 <li><a href="#team" onclick="closeMobileMenu()">Team</a></li>
                 <li><a href="philosophy.html" onclick="closeMobileMenu()">Philosophy</a></li>
-                <li><a href="insights.html" onclick="closeMobileMenu()">Insights</a></li>
+                <!-- <li><a href="insights.html" onclick="closeMobileMenu()">Insights</a></li> -->
                 <li><a href="#contact" class="cta-button" onclick="closeMobileMenu(); openContactModal(); event.preventDefault();">Get in Touch</a></li>
             </ul>
         </div>
@@ -1540,52 +1562,28 @@
         <div style="max-width: 1200px; margin: 0 auto;">
             <div style="text-align: center; margin-bottom: 4rem;">
                 <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: var(--odes-accent); margin-bottom: 1rem; letter-spacing: -0.01em;">Why ODES</h2>
+                <p style="font-size: clamp(1.1rem, 2vw, 1.25rem); line-height: 1.8; color: var(--odes-text); max-width: 900px; margin: 1.5rem auto 0; opacity: 0.9;">Our <b>Vision</b> is to democratize space by giving every engineer the speed and certainty to validate complex missions in hours, making mission agility the new standard.</p>
             </div>
 
             <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.5rem;">
-                <div class="fade-in-child" style="padding: 2.5rem; background: rgba(26, 26, 26, 0.5); border-left: 3px solid var(--odes-accent); border-radius: 8px;">
-                    <h3 style="color: var(--odes-accent); font-size: 1.5rem; margin-bottom: 1rem; font-weight: 600;">Reduce Mission Risk</h3>
-                    <p style="color: var(--odes-text); line-height: 1.8; margin: 0; font-size: 1.05rem;">Identify and mitigate critical issues before launch through comprehensive simulation and systematic validation workflows.</p>
+                <div class="fade-in-child why-odes-card" style="padding: 2.5rem; background: rgba(26, 26, 26, 0.4); border: 1px solid var(--odes-border); border-radius: 8px; transition: all 0.3s ease; position: relative; overflow: hidden;">
+                    <h3 style="color: var(--odes-accent); font-size: 1.4rem; margin-bottom: 1rem; font-weight: 600;">Increase Mission Success Probability</h3>
+                    <p style="color: var(--odes-text); line-height: 1.7; margin: 0; font-size: 1rem; opacity: 0.85;">Identify and mitigate critical issues before launch through comprehensive simulation and systematic validation workflows.</p>
                 </div>
 
-                <div class="fade-in-child" style="padding: 2.5rem; background: rgba(26, 26, 26, 0.5); border-left: 3px solid var(--odes-purple); border-radius: 8px;">
-                    <h3 style="color: var(--odes-purple); font-size: 1.5rem; margin-bottom: 1rem; font-weight: 600;">Accelerate Development</h3>
-                    <p style="color: var(--odes-text); line-height: 1.8; margin: 0; font-size: 1.05rem;">Parallel validation processes and automated testing reduce time-to-launch by up to 40% compared to traditional methods.</p>
+                <div class="fade-in-child why-odes-card" style="padding: 2.5rem; background: rgba(26, 26, 26, 0.4); border: 1px solid var(--odes-border); border-radius: 8px; transition: all 0.3s ease; position: relative; overflow: hidden;">
+                    <h3 style="color: var(--odes-accent); font-size: 1.4rem; margin-bottom: 1rem; font-weight: 600;">Accelerate Development</h3>
+                    <p style="color: var(--odes-text); line-height: 1.7; margin: 0; font-size: 1rem; opacity: 0.85;">Parallel validation processes and automated testing reduce time-to-launch by up to 40% compared to traditional methods.</p>
                 </div>
 
-                <div class="fade-in-child" style="padding: 2.5rem; background: rgba(26, 26, 26, 0.5); border-left: 3px solid var(--odes-coral); border-radius: 8px;">
-                    <h3 style="color: var(--odes-coral); font-size: 1.5rem; margin-bottom: 1rem; font-weight: 600;">Lower Costs</h3>
-                    <p style="color: var(--odes-text); line-height: 1.8; margin: 0; font-size: 1.05rem;">Early issue detection prevents expensive redesigns and mission failures. Reduce validation overhead through automation.</p>
+                <div class="fade-in-child why-odes-card" style="padding: 2.5rem; background: rgba(26, 26, 26, 0.4); border: 1px solid var(--odes-border); border-radius: 8px; transition: all 0.3s ease; position: relative; overflow: hidden;">
+                    <h3 style="color: var(--odes-accent); font-size: 1.4rem; margin-bottom: 1rem; font-weight: 600;">Lower Costs</h3>
+                    <p style="color: var(--odes-text); line-height: 1.7; margin: 0; font-size: 1rem; opacity: 0.85;">Early issue detection prevents expensive redesigns and mission failures. Reduce validation overhead through automation.</p>
                 </div>
 
-                <div class="fade-in-child" style="padding: 2.5rem; background: rgba(26, 26, 26, 0.5); border-left: 3px solid var(--odes-grey); border-radius: 8px;">
-                    <h3 style="color: var(--odes-grey); font-size: 1.5rem; margin-bottom: 1rem; font-weight: 600;">Ensure Compliance</h3>
-                    <p style="color: var(--odes-text); line-height: 1.8; margin: 0; font-size: 1.05rem;">Automated documentation and traceability satisfy regulatory requirements and customer quality standards.</p>
-                </div>
-            </div>
-
-            <!-- Mission, Vision, Values, Environmental -->
-            <div style="margin-top: 4rem; padding-top: 4rem; border-top: 1px solid var(--odes-border);">
-                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem;">
-                    <div class="fade-in-child" style="padding: 2rem; background: rgba(26, 26, 26, 0.5); border-left: 3px solid var(--odes-accent); border-radius: 4px;">
-                        <h3 style="color: var(--odes-accent); font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Vision</h3>
-                        <p style="color: var(--odes-text); line-height: 1.7; margin: 0;">Reduce microsatellite mission failures through accessible, comprehensive validation.</p>
-                    </div>
-
-                    <div class="fade-in-child" style="padding: 2rem; background: rgba(26, 26, 26, 0.5); border-left: 3px solid var(--odes-purple); border-radius: 4px;">
-                        <h3 style="color: var(--odes-purple); font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Mission</h3>
-                        <p style="color: var(--odes-text); line-height: 1.7; margin: 0;">Deploy a holistic validation environment that enables comprehensive mission verification and testing.</p>
-                    </div>
-
-                    <div class="fade-in-child" style="padding: 2rem; background: rgba(26, 26, 26, 0.5); border-left: 3px solid var(--odes-coral); border-radius: 4px;">
-                        <h3 style="color: var(--odes-coral); font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Values</h3>
-                        <p style="color: var(--odes-text); line-height: 1.7; margin: 0;"><strong>Reliability</strong> · <strong>Accessibility</strong> · <strong>Efficiency</strong> · <strong>Empowerment</strong> built on trust, ethics, innovation, and responsibility.</p>
-                    </div>
-
-                    <div class="fade-in-child" style="padding: 2rem; background: rgba(26, 26, 26, 0.5); border-left: 3px solid var(--odes-grey); border-radius: 4px;">
-                        <h3 style="color: var(--odes-grey); font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Environmental Footprint</h3>
-                        <p style="color: var(--odes-text); line-height: 1.7; margin: 0;">Preventing space debris through comprehensive validation—ensuring satellites complete missions and deorbit safely.</p>
-                    </div>
+                <div class="fade-in-child why-odes-card" style="padding: 2.5rem; background: rgba(26, 26, 26, 0.4); border: 1px solid var(--odes-border); border-radius: 8px; transition: all 0.3s ease; position: relative; overflow: hidden;">
+                    <h3 style="color: var(--odes-accent); font-size: 1.4rem; margin-bottom: 1rem; font-weight: 600;">Ensure Compliance</h3>
+                    <p style="color: var(--odes-text); line-height: 1.7; margin: 0; font-size: 1rem; opacity: 0.85;">Automated documentation and traceability satisfy regulatory requirements and customer quality standards.</p>
                 </div>
             </div>
         </div>
@@ -1595,7 +1593,7 @@
     <section id="capabilities">
         <div class="section-header">
             <h2>Platform Capabilities</h2>
-            <p>End-to-end validation from design through on-orbit operations</p>
+            <p>Our <b>Mission</b> is to deploy a holistic validation environment that enables comprehensive mission verification and testing from <b>Design to Operations.</b></p>
         </div>
         <div class="features-grid">
             <div class="feature-card fade-in-child">
@@ -1693,7 +1691,8 @@
     <section id="services">
         <div class="section-header">
             <h2>Services</h2>
-            <p>End-to-end mission validation and engineering support from proposal to launch</p>
+            <p>Mission validation through the entire lifecycle; from proposal to safe deorbit<b>
+                  protecting our orbital environment.</b></p>
         </div>
         <div class="features-grid" style="grid-template-columns: repeat(auto-fit, minmax(min(350px, 100%), 1fr)); max-width: 1400px; margin: 3rem auto 0;">
 
@@ -1788,16 +1787,16 @@
     </section>
 
     <!-- Testimonials & Projects -->
-    <section id="projects" class="testimonials-section fade-in">
-        <div style="max-width: 1400px; margin: 0 auto;">
+    <!-- <section id="projects" class="testimonials-section fade-in">
+        <div style="max-width: 1400px; margin: 0 auto;"> -->
             <!-- Projects -->
-            <div class="section-header">
+            <!-- <div class="section-header">
                 <h2>Projects</h2>
                 <p>Missions and partners we're proud to support</p>
-            </div>
+            </div> -->
 
             <!-- Service Projects -->
-            <div style="margin-top: 3rem;">
+            <!-- <div style="margin-top: 3rem;">
                 <h3 style="color: var(--odes-accent); font-size: 1.3rem; text-align: center; margin-bottom: 2rem; font-weight: 600;">Validation & Simulation Services</h3>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 3rem; max-width: 1400px; margin: 0 auto; align-items: stretch;">
                     <a href="https://emtech.global/hsd-historic/" target="_blank" rel="noopener noreferrer" class="testimonial-card fade-in-child" style="text-decoration: none; display: flex; flex-direction: column; gap: 1.5rem;">
@@ -1819,10 +1818,10 @@
                         <div class="testimonial-author">Theodoros Sarris <br>Mission Manager</div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Product Projects -->
-            <div style="margin-top: 5rem;">
+            <!-- <div style="margin-top: 5rem;">
                 <h3 style="color: var(--odes-accent); font-size: 1.3rem; text-align: center; margin-bottom: 2rem; font-weight: 600;">Interference Resolution Tool</h3>
                 <div style="display: flex; justify-content: center; max-width: 500px; margin: 0 auto;">
                     <a href="https://open-cosmos.com/" target="_blank" rel="noopener noreferrer" class="testimonial-card fade-in-child" style="text-decoration: none; display: flex; flex-direction: column; gap: 1.5rem; width: 100%;">
@@ -1834,7 +1833,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <!-- Team -->
     <section id="team">
@@ -1902,7 +1901,6 @@
                     <label for="topic">Select topic <span class="required">*</span></label>
                     <select id="topic" name="topic" required>
                         <option value="">Select a topic</option>
-                        <option value="Products">Products</option>
                         <option value="Services">Services</option>
                         <option value="Support">Support</option>
                         <option value="Investment">Investment</option>
@@ -2245,7 +2243,7 @@
                 { id: 'why-odes', selector: '#why-odes h2' },
                 { id: 'capabilities', selector: '#capabilities .section-header h2' },
                 { id: 'services', selector: '#services .section-header h2' },
-                { id: 'projects', selector: '#projects .section-header h2' },
+                // { id: 'projects', selector: '#projects .section-header h2' },
                 { id: 'team', selector: '#team .section-header h2' }
             ];
 

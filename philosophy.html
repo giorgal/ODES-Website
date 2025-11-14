@@ -315,79 +315,76 @@
         }
 
         .values-grid {
-            max-width: 100%;
+            max-width: 1000px;
             margin: 4rem auto 0;
-            padding: 3rem 0;
-            background: rgba(10, 10, 10, 0.5);
-        }
-
-        .values-grid-inner {
+            padding: 0;
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2.5rem;
         }
 
-        .value-card {
-            padding: 2rem;
-            background: rgba(26, 26, 26, 0.5);
-            border-radius: 4px;
+        .value-item {
+            padding: 2.5rem;
+            background: rgba(26, 26, 26, 0.4);
+            border: 1px solid var(--odes-border);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        .value-card.accent {
-            border-left: 3px solid var(--odes-accent);
+        .value-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--odes-gradient);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
-        .value-card.purple {
-            border-left: 3px solid var(--odes-purple);
+        .value-item:hover {
+            background: rgba(26, 26, 26, 0.7);
+            border-color: var(--odes-purple);
+            transform: translateY(-4px);
         }
 
-        .value-card.coral {
-            border-left: 3px solid var(--odes-coral);
+        .value-item:hover::before {
+            opacity: 1;
         }
 
-        .value-card.grey {
-            border-left: 3px solid var(--odes-grey);
-        }
-
-        .value-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
+        .value-item h3 {
+            font-size: 1.4rem;
             font-weight: 600;
-        }
-
-        .value-card.accent h3 {
             color: var(--odes-accent);
+            margin-bottom: 1rem;
+            letter-spacing: -0.01em;
         }
 
-        .value-card.purple h3 {
-            color: var(--odes-purple);
-        }
-
-        .value-card.coral h3 {
-            color: var(--odes-coral);
-        }
-
-        .value-card.grey h3 {
-            color: var(--odes-grey);
-        }
-
-        .value-card p {
+        .value-item p {
             color: var(--odes-text);
             line-height: 1.7;
             margin: 0;
             font-size: 1rem;
+            opacity: 0.85;
         }
 
-        @media (max-width: 1024px) {
-            .values-grid-inner {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 640px) {
-            .values-grid-inner {
+        @media (max-width: 768px) {
+            .values-grid {
                 grid-template-columns: 1fr;
+                gap: 2rem;
             }
+
+            .value-item {
+                padding: 2rem;
+            }
+
+            .value-item h3 {
+                font-size: 1.3rem;
+            }
+        }
 
             #philosophy {
                 padding-top: 100px;
@@ -665,10 +662,10 @@
                 <li><a href="index.html#why-odes" onclick="navigateToSection(event, 'index.html#why-odes')">Why ODES</a></li>
                 <li><a href="index.html#capabilities" onclick="navigateToSection(event, 'index.html#capabilities')">Capabilities</a></li>
                 <li><a href="index.html#services" onclick="navigateToSection(event, 'index.html#services')">Services</a></li>
-                <li><a href="index.html#projects" onclick="navigateToSection(event, 'index.html#projects')">Projects</a></li>
+                <!-- <li><a href="index.html#projects" onclick="navigateToSection(event, 'index.html#projects')">Projects</a></li> -->
                 <li><a href="index.html#team" onclick="navigateToSection(event, 'index.html#team')">Team</a></li>
                 <li><a href="philosophy.html" class="active" onclick="closeMobileMenu()">Philosophy</a></li>
-                <li><a href="insights.html" onclick="closeMobileMenu()">Insights</a></li>
+                <!-- <li><a href="insights.html" onclick="closeMobileMenu()">Insights</a></li> -->
                 <li><a href="#" onclick="openContactModal(); event.preventDefault();" class="cta-button">Get in Touch</a></li>
             </ul>
         </div>
@@ -704,6 +701,27 @@
                     "While others celebrate the stars, we praise the ground that made reaching them possible."
                 </p>
                 <p>— The ODES Philosophy</p>
+            </div>
+
+            <h2 style="margin-top: 4rem; margin-bottom: 1rem; font-size: 2rem;">Our Values</h2>
+
+            <div class="values-grid">
+                <div class="value-item">
+                    <h3>Craftsmanship</h3>
+                    <p>We strive for excellence in everything we build, cutting scope instead of quality because we're deeply proud of our work.</p>
+                </div>
+                <div class="value-item">
+                    <h3>Integrity</h3>
+                    <p>We're driven by making the world better, not money or fame, and we refuse to compromise on our core principles.</p>
+                </div>
+                <div class="value-item">
+                    <h3>Empathy</h3>
+                    <p>We see the world through others' eyes to effectively deliver utility that serves their needs.</p>
+                </div>
+                <div class="value-item">
+                    <h3>Candor</h3>
+                    <p>We value honest, direct communication and actively seek feedback, even when it's difficult to hear or give.</p>
+                </div>
             </div>
         </div>
     </section>
